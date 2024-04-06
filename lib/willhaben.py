@@ -6,11 +6,15 @@ from typing import List, Optional, Literal, Union
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
+from json import JSONEncoder
 import json
 from http import HTTPStatus
 from lib.query_params import PROPERTY_TYPE, FREE_AREA_TYPE, ESTATE_PREFERENCE, AVAILABILITY, CATEGORY, STATE, DISTRICT
 from lib.helpers import handle_argument_list
 from fake_useragent import UserAgent
+from datetime import datetime
+from decimal import Decimal
+
 
 class WillhabenQueryBuilder:
 
@@ -20,6 +24,7 @@ class WillhabenQueryBuilder:
         self._base_url: str = "https://www.willhaben.at/iad/immobilien"
         self._query_url: str = None
         self.category: CATEGORY = None
+        self.start_page: int = 1
         self.state: STATE = None
         self.district: Optional[DISTRICT] = None  # this can only be set if state is set
         self.rows: int = 30
@@ -32,7 +37,8 @@ class WillhabenQueryBuilder:
         self.free_area_types: Optional[List[FREE_AREA_TYPE]] = []  # Freiflächen. if none is selected, the result will contain all types
         self.estate_preferences: Optional[List[ESTATE_PREFERENCE]] = []  # Ausstattung. if none is selected, the result will contain all types
         self.availabe_now: bool = None
-        self.ua_header = UserAgent().random
+        self.ua_header = {"User-Agent": UserAgent().random}
+        self.sort_by = 1  # 1 = newest first, 2 = nearest 3 = cheapest first, 4 = most expensive first, 5 = smallest first, 6 = largest first, 7 = relevant first
 
     def set_category(self, category: CATEGORY):
         self.category = category
@@ -117,38 +123,60 @@ class WillhabenQueryBuilder:
     # example url: https://www.willhaben.at/iad/immobilien/mietwohnungen/salzburg/salzburg-stadt?rows=10&PRICE_FROM=100&PRICE_TO=200&ESTATE_SIZE/LIVING_AREA_FROM=50&ESTATE_SIZE/LIVING_AREA_TO=100&NO_OF_ROOMS_BUCKET=1X1
     def get_query_url(self):
         self._query_url = self._base_url
+        # category
         if self.category is None:
             raise Exception('You must set the category before getting the query url.')
         self._query_url += f'/{self.category.value}'
+        # state
         if self.state is not None:
             self._query_url += f'/{self.state.value}'
+        # district
         if self.district is not None and self.state is None:
             raise Exception('You must set the state before setting the district.')
         elif self.district is not None and self.state is not None:
             self._query_url += f'/{self.district.value}'
         self._query_url += f'?rows={self.rows}'
+        # price from
         if self.price_from is not None:
             self._query_url += f'&PRICE_FROM={self.price_from}'
+        # price to
         if self.price_to is not None:
             self._query_url += f'&PRICE_TO={self.price_to}'
+        # size from
         if self.size_from is not None:
             self._query_url += f'&ESTATE_SIZE/LIVING_AREA_FROM={self.size_from}'
+        # size to
         if self.size_to is not None:
             self._query_url += f'&ESTATE_SIZE/LIVING_AREA_TO={self.size_to}'
+        # number of rooms
         if self.number_of_rooms is not None:
             for num in self.number_of_rooms:
                 self._query_url += f'&NO_OF_ROOMS_BUCKET={num}'
+        # property types
         if self.property_types is not None:
             for property_type in self.property_types:
                 self._query_url += f'&PROPERTY_TYPE={property_type.value}'
+        # free area types
         if self.free_area_types is not None:
             for free_area_type in self.free_area_types:
                 self._query_url += f'&FREE_AREA/FREE_AREA_TYPE={free_area_type.value}'
+        # estate preferences
         if self.estate_preferences is not None:
             for estate_preference in self.estate_preferences:
                 self._query_url += f'&ESTATE_PREFERENCE={estate_preference.value}'
+        # available now
         if self.availabe_now is not None:
             self._query_url += f'&AVAILABLETODAY={AVAILABILITY.AVAILABLE_NOW.value}'
+        # start page
+        if self.start_page is not None:
+            self._query_url += f'&page={str(self.start_page)}'
+        else:
+            self._query_url += '&page=1'
+        # sort
+        if self.sort_by is not None:
+            self._query_url += f'&sort={str(self.sort_by)}'
+        else:
+            self._query_url += '&sort=1'
         return self._query_url
 
     def getRandomHeader(self):
@@ -175,48 +203,105 @@ class WillhabenQueryBuilder:
                 try:
                     json_data = json.loads(script_content)
                     listings = json_data["props"]["pageProps"]["searchResult"]["advertSummaryList"]["advertSummary"]
-                    insertData = self.get_formatted_listings_as_json(listings)
+                    insertData = self.get_formatted_listings_as_list(listings)
                 except json.JSONDecodeError as e:
                     print(f"Error decoding JSON: {e}")
         print(f"ERROR max pages reached: {self.max_pages}")
 
     # This method returns the listings as an array of json objects with only a selection of attributes.
-    def get_formatted_listings_as_json(self,listings ) -> List[dict]:
+    def tryConvert(self, value,  class_var, errorMassage):
+        try:
+            if class_var == int:
+                return int(round(float(value)))
+            elif class_var == datetime:
+                return datetime.strptime(value[:-1], "%Y-%m-%dT%H:%M:%S").isoformat()
+            return class_var(value)
+        except:
+            print("Error converting " + errorMassage + ":" + str(value))
+            raise TypeError("Error converting " + errorMassage + ":" + str(value))
+
+    def get_formatted_listings_as_list(self, listings) -> List[dict]:
      #   listings = self.get_full_listings_as_json()
-        listings_json = []
+
+        listing_list = []
         for listing in listings:
+            # jic i dont trust pythons new jit compiler
+            attributes = ""
+            attributeDict = {}
+            #######
             attributes = listing['attributes']['attribute']
-            property_type = number_of_rooms = published_date = price = size_sqm = ""
-            for attribute in attributes:
-                if attribute['name'] == 'PROPERTY_TYPE':
-                    property_type = attribute['values'][0]
-                if attribute['name'] == 'NUMBER_OF_ROOMS':
-                    number_of_rooms = attribute['values'][0]
-                if attribute['name'] == 'PUBLISHED_String':
-                    published_date_str = attribute['values'][0]
-                    date_format = "%Y-%m-%dT%H:%M:%SZ"
-                    try:
-                        published_date = datetime.strptime(published_date_str, date_format).isoformat()
-                    except ValueError:
-                        print(f"Error parsing date: {published_date_str}")
-                        published_date = None
-                if attribute['name'] == 'PRICE_FOR_DISPLAY':
-                    price = attribute['values'][0]
-                if attribute['name'] == 'ESTATE_SIZE':
-                    size_sqm = attribute['values'][0]
-                if attribute['name'] == 'SEO_URL':
-                    url = attribute['values'][0]
+            attributeDict = {item['name']: item['values'][0] if item['values'] else None for item in attributes}
+
+            property_type = attributeDict.get('PROPERTY_TYPE', "")
+            number_of_rooms = attributeDict.get('NUMBER_OF_ROOMS', "69")
+            published_date = attributeDict.get('PUBLISHED_String', "0001-01-01T01:01:01Z")
+            # price = betterAttributeDict.get('PRICE_FOR_DISPLAY', "")
+            price = attributeDict.get('PRICE', "69")
+            location = attributeDict.get('LOCATION', "")
+            description = attributeDict.get('BODY_DYN', "")
+            state = attributeDict.get('STATE', "")
+            district = attributeDict.get('DISTRICT', "")
+            seller = attributeDict.get('ORGNAME', "")
+            estate_size_living_area = attributeDict.get('ESTATE_SIZE/LIVING_AREA', "69")
+            floor = attributeDict.get('FLOOR', "")
+            published = attributeDict.get('PUBLISHED_String', "")
+            country = attributeDict.get('COUNTRY', "")
+            location_id = attributeDict.get('LOCATION_ID', "69")
+            location_quality = attributeDict.get('LOCATION_QUALITY', "")
+            address = attributeDict.get('ADDRESS', "")
+            postcode = attributeDict.get('POSTCODE', "69")
+            property_type_flat = attributeDict.get('PROPERTY_TYPE_FLAT', "")
+            free_area_type_name = attributeDict.get('FREE_AREA_TYPE_NAME', "")
+            free_area_total = attributeDict.get('FREE_AREA/FREE_AREA_AREA_TOTAL', "69")
+            upselling_ad_searchresult = attributeDict.get('UPSELLING_AD_SEARCHRESULT', "")
+            coordinates = attributeDict.get('COORDINATES', "")
+            is_private = attributeDict.get('ISPRIVATE', "69")
+            size_qm = attributeDict.get('ESTATE_SIZE', "69")
+            url = attributeDict.get('SEO_URL', "")
+            # convert int
+            willhaben_id = self.tryConvert(listing.get('id', "0"), int, "willhaben_id int")
+            size_qm = self.tryConvert(size_qm, int, "size_qm int")
+            price = self.tryConvert(price, int, "price int")
+            number_of_rooms = self.tryConvert(number_of_rooms, int, "number_of_rooms int")
+            estate_size_living_area = self.tryConvert(estate_size_living_area, int, "estate_size_living_area int")
+            location_id = self.tryConvert(location_id, int, "location_id int")
+            postcode = self.tryConvert(postcode, int, "postcode int")
+            free_area_total = self.tryConvert(free_area_total, int, "free_area_total int")
+            is_private = self.tryConvert(is_private, int, "is_private int")
+            #convertDate
+            published_date = self.tryConvert(published_date, datetime, "published_date datetime")
+            published = self.tryConvert(published, datetime, "published datetime")
+            
+
             formatted_listing = {
-                'willhaben_id': listing['id'],
+                'willhaben_id': willhaben_id,
                 'platform': 'willhaben',
-                'description': listing['description'],
+                'summary': listing.get('description', ""),
                 'property_type': property_type,
                 'number_of_rooms': number_of_rooms,
                 'date_published': published_date,
-                'price_per_month': price,
-                'size_sqm': size_sqm,
-                'url': "https://www.willhaben.at/iad/" + url
-
+                'price': price,
+                'size_qm': size_qm,
+                'url': "https://www.willhaben.at/iad/" + url,
+                'location': location,
+                'description': description,
+                'state': state,
+                'district': district,
+                'seller': seller,
+                'estate_size_living_area': estate_size_living_area,
+                'floor': floor,
+                'published': published,
+                'country': country,
+                'location_id': location_id,
+                'location_quality': location_quality,
+                'address': address,
+                'postcode': postcode,
+                'property_type_flat': property_type_flat,
+                'free_area_type_name': free_area_type_name,
+                'free_area_total': free_area_total,
+                'upselling_ad_searchresult': upselling_ad_searchresult,
+                'coordinates': coordinates,
+                'is_private': is_private,
             }
-            listings_json.append(formatted_listing)
+            listing_list.append(formatted_listing)
        # return listings_json

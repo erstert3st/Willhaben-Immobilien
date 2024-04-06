@@ -16,7 +16,7 @@ willhaben_query.set_category(CATEGORY.RENT_APARTMENT) \
     
 URl = willhaben_query.get_query_url()
 full_listings_list = willhaben_query.get_full_listings_as_json()
-formated_list = willhaben_query.get_formatted_listings_as_json()
+formated_list = willhaben_query.get_formatted_listings_as_list()
 
 print("Query URL: " + URl)
 print("\n\nFull Listings (not formatted and confusing): " + str(full_listings_list))

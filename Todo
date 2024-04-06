@@ -2,7 +2,12 @@
 2 add sqlLite
 3 add page crawler
 4 add map with sql Lite #fuckPhp
-5#lol make bugfix on there git xD 
+5 add remove double OR errorhandler if will-haben Id Exist #Fuck Premium listenings
+6 add sort Handling
+7 sql handler 
+8 DockerFile
+
+6#lol make bugfix on there git xD 
 Future me 
 add interactive cli 
 make meme
