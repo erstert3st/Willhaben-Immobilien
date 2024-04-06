@@ -10,7 +10,7 @@ import json
 from http import HTTPStatus
 from lib.query_params import PROPERTY_TYPE, FREE_AREA_TYPE, ESTATE_PREFERENCE, AVAILABILITY, CATEGORY, STATE, DISTRICT
 from lib.helpers import handle_argument_list
-
+from fake_useragent import UserAgent
 
 class WillhabenQueryBuilder:
 
@@ -32,6 +32,7 @@ class WillhabenQueryBuilder:
         self.free_area_types: Optional[List[FREE_AREA_TYPE]] = []  # Freiflächen. if none is selected, the result will contain all types
         self.estate_preferences: Optional[List[ESTATE_PREFERENCE]] = []  # Ausstattung. if none is selected, the result will contain all types
         self.availabe_now: bool = None
+        self.ua_header = UserAgent().random
 
     def set_category(self, category: CATEGORY):
         self.category = category
@@ -206,7 +207,7 @@ class WillhabenQueryBuilder:
                 if attribute['name'] == 'SEO_URL':
                     url = attribute['values'][0]
             formatted_listing = {
-                'id': listing['id'],
+                'willhaben_id': listing['id'],
                 'platform': 'willhaben',
                 'description': listing['description'],
                 'property_type': property_type,
