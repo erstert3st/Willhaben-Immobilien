@@ -5,20 +5,20 @@ from lib.query_params import CATEGORY, STATE, DISTRICT, PROPERTY_TYPE, FREE_AREA
 
 willhaben_query = WillhabenQueryBuilder()
 willhaben_query.set_category(CATEGORY.RENT_APARTMENT) \
-    .set_state(STATE.SALZBURG) \
-    .set_district(DISTRICT.SALZBURG_SALZBURG_STADT) \
-    .set_rows(2) \
-    .set_price_from(500) \
-    .set_price_to(1500) \
+    .set_state(STATE.STEIERMARK) \
+    .set_district(DISTRICT.STEIERMARK_GRAZ) \
+    .set_rows(250) \
+    .set_price_from(200) \
+    .set_price_to(1000) \
     .set_size_from(40) \
-    .set_size_to(100) \
-    .add_property_type([PROPERTY_TYPE.APARTMENT, PROPERTY_TYPE.GARCONNIERE]) \
-    .add_free_area_type([FREE_AREA_TYPE.BALCONY])
+    .set_size_to(10000) \
 
-print("Query URL: ")
-print(willhaben_query.get_query_url())
-print("\n\nFull Listings (not formatted and confusing): ")
-print(willhaben_query.get_full_listings_as_json())
-print("\n\nFormatted listings as JSON: ")
-print(willhaben_query.get_formatted_listings_as_json())
+    
+URl = willhaben_query.get_query_url()
+full_listings_list = willhaben_query.get_full_listings_as_json()
+formated_list = willhaben_query.get_formatted_listings_as_json()
 
+print("Query URL: " + URl)
+print("\n\nFull Listings (not formatted and confusing): " + str(full_listings_list))
+print("\n\nFormatted listings as JSON: " + str(formated_list))
+print("done")

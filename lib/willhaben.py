@@ -6,16 +6,18 @@ from typing import List, Optional, Literal, Union
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
 import json
 from http import HTTPStatus
 from lib.query_params import PROPERTY_TYPE, FREE_AREA_TYPE, ESTATE_PREFERENCE, AVAILABILITY, CATEGORY, STATE, DISTRICT
 from lib.helpers import handle_argument_list
 
-REQUEST_HEADERS: dict = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
 class WillhabenQueryBuilder:
 
     def __init__(self):
+
+        self.max_pages = 100
         self._base_url: str = 'https://www.willhaben.at/iad/immobilien'
         self._query_url: str = None
         self.category: CATEGORY = None
@@ -31,6 +33,8 @@ class WillhabenQueryBuilder:
         self.free_area_types: Optional[List[FREE_AREA_TYPE]] = [] #Freiflächen. if none is selected, the result will contain all types
         self.estate_preferences: Optional[List[ESTATE_PREFERENCE]] = [] #Ausstattung. if none is selected, the result will contain all types
         self.availabe_now: bool = None
+        self.ua_header = UserAgent().random   
+
 
     def set_category(self, category: CATEGORY):
         self.category = category
@@ -149,21 +153,35 @@ class WillhabenQueryBuilder:
             self._query_url += f'&AVAILABLETODAY={AVAILABILITY.AVAILABLE_NOW.value}'
         return self._query_url
     
+    def getRandomHeader(self):
+        new_ua = UserAgent()
+        header = {'User-Agent': new_ua.random}
+        return  header
+    
     def get_full_listings_as_json(self) -> List[dict]:
-        response = requests.get(self.get_query_url(), headers=REQUEST_HEADERS)
+        url = self.get_query_url()
+        response = requests.get(url, headers=self.ua_header)
         if response.status_code == HTTPStatus.OK:
-                soup = BeautifulSoup(response.text, 'html.parser')
-                script_tag = soup.find('script', {'id': '__NEXT_DATA__'})
-                if script_tag:
-                    script_content = script_tag.string
-                    try:
-                        json_data = json.loads(script_content)
-                        listings = json_data['props']['pageProps']['searchResult']['advertSummaryList']['advertSummary']
-                        return listings
-                    except json.JSONDecodeError as e:
-                        print(f"Error decoding JSON: {e}")
+                li_elements = soup.find_all('li')
+                pageCount = len(li_elements) - 2
+                print(pageCount)
+        else:
+            print(f"Error fetching data: {response.status_code}")
+        for counter in range(1, self.max_pages):
+            print(counter)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            script_tag = soup.find('script', {'id': '__NEXT_DATA__'})
+            if script_tag:
+                script_content = script_tag.string
+                try:
+                    json_data = json.loads(script_content)
+                    listings = json_data['props']['pageProps']['searchResult']['advertSummaryList']['advertSummary']
+                    return listings
+                except json.JSONDecodeError as e:
+                    print(f"Error decoding JSON: {e}")
+        print(f"ERROR max pages reached: {self.max_pages}")
 
-
+##skip-to-content > div > div.Box-sc-wfmb7k-0.fvLiku > div.Box-sc-wfmb7k-0.kZCrvi > div.Box-sc-wfmb7k-0.fqBXQo > div.Box-sc-wfmb7k-0.iQyfXD > div.Box-sc-wfmb7k-0.eKLASN > div.Box-sc-wfmb7k-0.kIeNoy > nav > ul
     #This method returns the listings as an array of json objects with only a selection of attributes.
     def get_formatted_listings_as_json(self) -> List[dict]:
         listings = self.get_full_listings_as_json()
