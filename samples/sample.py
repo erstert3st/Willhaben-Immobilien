@@ -2,7 +2,7 @@ import sys
 sys.path.append('.')
 from lib.willhaben import WillhabenQueryBuilder
 from lib.query_params import CATEGORY, STATE, DISTRICT, PROPERTY_TYPE, FREE_AREA_TYPE, ESTATE_PREFERENCE
-
+import debugpy 
 willhaben_query = WillhabenQueryBuilder()
 willhaben_query.set_category(CATEGORY.RENT_APARTMENT) \
     .set_state(STATE.STEIERMARK) \
