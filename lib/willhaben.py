@@ -2,6 +2,7 @@
 # At the moment, the class is not fully complete. It is mainly made for querying apartments, but it can be extended to query other types of real estate.
 # The query parameters are the same as on the website. If you need more parameters, simply add them to the query_params.py file and implement the setter methods in the WillhabenQuery class.
 
+import time
 from typing import List, Optional, Literal, Union
 from datetime import datetime
 import requests
@@ -14,7 +15,7 @@ from lib.helpers import handle_argument_list
 from fake_useragent import UserAgent
 from datetime import datetime
 from decimal import Decimal
-
+from lib.db import  Db_handler
 
 class WillhabenQueryBuilder:
 
@@ -22,7 +23,8 @@ class WillhabenQueryBuilder:
 
         self.max_pages = 100
         self._base_url: str = "https://www.willhaben.at/iad/immobilien"
-        self._query_url: str = None
+        self._query_url: str = ""
+        self._query_url_with_page: str = ""
         self.category: CATEGORY = None
         self.start_page: int = 1
         self.state: STATE = None
@@ -39,6 +41,9 @@ class WillhabenQueryBuilder:
         self.availabe_now: bool = None
         self.ua_header = {"User-Agent": UserAgent().random}
         self.sort_by = 1  # 1 = newest first, 2 = nearest 3 = cheapest first, 4 = most expensive first, 5 = smallest first, 6 = largest first, 7 = relevant first
+        self.table_name = "test1"
+        self.db_connection: Db_handler = Db_handler("./db/noData.db", self.table_name)
+        
 
     def set_category(self, category: CATEGORY):
         self.category = category
@@ -121,91 +126,107 @@ class WillhabenQueryBuilder:
         return self
 
     # example url: https://www.willhaben.at/iad/immobilien/mietwohnungen/salzburg/salzburg-stadt?rows=10&PRICE_FROM=100&PRICE_TO=200&ESTATE_SIZE/LIVING_AREA_FROM=50&ESTATE_SIZE/LIVING_AREA_TO=100&NO_OF_ROOMS_BUCKET=1X1
-    def get_query_url(self):
-        self._query_url = self._base_url
-        # category
-        if self.category is None:
-            raise Exception('You must set the category before getting the query url.')
-        self._query_url += f'/{self.category.value}'
-        # state
-        if self.state is not None:
-            self._query_url += f'/{self.state.value}'
-        # district
-        if self.district is not None and self.state is None:
-            raise Exception('You must set the state before setting the district.')
-        elif self.district is not None and self.state is not None:
-            self._query_url += f'/{self.district.value}'
-        self._query_url += f'?rows={self.rows}'
-        # price from
-        if self.price_from is not None:
-            self._query_url += f'&PRICE_FROM={self.price_from}'
-        # price to
-        if self.price_to is not None:
-            self._query_url += f'&PRICE_TO={self.price_to}'
-        # size from
-        if self.size_from is not None:
-            self._query_url += f'&ESTATE_SIZE/LIVING_AREA_FROM={self.size_from}'
-        # size to
-        if self.size_to is not None:
-            self._query_url += f'&ESTATE_SIZE/LIVING_AREA_TO={self.size_to}'
-        # number of rooms
-        if self.number_of_rooms is not None:
-            for num in self.number_of_rooms:
-                self._query_url += f'&NO_OF_ROOMS_BUCKET={num}'
-        # property types
-        if self.property_types is not None:
-            for property_type in self.property_types:
-                self._query_url += f'&PROPERTY_TYPE={property_type.value}'
-        # free area types
-        if self.free_area_types is not None:
-            for free_area_type in self.free_area_types:
-                self._query_url += f'&FREE_AREA/FREE_AREA_TYPE={free_area_type.value}'
-        # estate preferences
-        if self.estate_preferences is not None:
-            for estate_preference in self.estate_preferences:
-                self._query_url += f'&ESTATE_PREFERENCE={estate_preference.value}'
-        # available now
-        if self.availabe_now is not None:
-            self._query_url += f'&AVAILABLETODAY={AVAILABILITY.AVAILABLE_NOW.value}'
-        # start page
-        if self.start_page is not None:
-            self._query_url += f'&page={str(self.start_page)}'
-        else:
-            self._query_url += '&page=1'
-        # sort
-        if self.sort_by is not None:
-            self._query_url += f'&sort={str(self.sort_by)}'
-        else:
-            self._query_url += '&sort=1'
-        return self._query_url
+    def get_query_url(self, page: int = 1):
+        if self._query_url == "":
+            self._query_url = self._base_url
+            # category
+            if self.category is None:
+                raise Exception('You must set the category before getting the query url.')
+            self._query_url += f'/{self.category.value}'
+            # state
+            if self.state is not None:
+                self._query_url += f'/{self.state.value}'
+            # district
+            if self.district is not None and self.state is None:
+                raise Exception('You must set the state before setting the district.')
+            elif self.district is not None and self.state is not None:
+                self._query_url += f'/{self.district.value}'
+            self._query_url += f'?rows={self.rows}'
+            # price from
+            if self.price_from is not None:
+                self._query_url += f'&PRICE_FROM={self.price_from}'
+            # price to
+            if self.price_to is not None:
+                self._query_url += f'&PRICE_TO={self.price_to}'
+            # size from
+            if self.size_from is not None:
+                self._query_url += f'&ESTATE_SIZE/LIVING_AREA_FROM={self.size_from}'
+            # size to
+            if self.size_to is not None:
+                self._query_url += f'&ESTATE_SIZE/LIVING_AREA_TO={self.size_to}'
+            # number of rooms
+            if self.number_of_rooms is not None:
+                for num in self.number_of_rooms:
+                    self._query_url += f'&NO_OF_ROOMS_BUCKET={num}'
+            # property types
+            if self.property_types is not None:
+                for property_type in self.property_types:
+                    self._query_url += f'&PROPERTY_TYPE={property_type.value}'
+            # free area types
+            if self.free_area_types is not None:
+                for free_area_type in self.free_area_types:
+                    self._query_url += f'&FREE_AREA/FREE_AREA_TYPE={free_area_type.value}'
+            # estate preferences
+            if self.estate_preferences is not None:
+                for estate_preference in self.estate_preferences:
+                    self._query_url += f'&ESTATE_PREFERENCE={estate_preference.value}'
+            # available now
+            if self.availabe_now is not None:
+                self._query_url += f'&AVAILABLETODAY={AVAILABILITY.AVAILABLE_NOW.value}'
+            # start page
 
+            # sort
+            if self.sort_by is not None:
+                self._query_url += f'&sort={str(self.sort_by)}'
+            else:
+                self._query_url += '&sort=1'
+        
+        self._query_url_with_page = self.add_page_to_query_url(page)
+        return self._query_url_with_page
+            
+    def add_page_to_query_url(self, page: int):
+        if self._query_url == "":
+            raise Exception('You must set the query url before adding a page.')
+        self._query_url_with_page = f'{self._query_url}&page={str(page)}'
+        return self._query_url_with_page
+    
     def getRandomHeader(self):
         new_ua = UserAgent()
         header = {"User-Agent": new_ua.random}
         return header
 
     def get_full_listings_as_json(self) -> List[dict]:
-        url = self.get_query_url()
-        response = requests.get(url, headers=self.ua_header)
-        soup = BeautifulSoup(response.text, "html.parser")
 
-        if response.status_code == HTTPStatus.OK:
-            li_elements = soup.find_all("li")
-            pageCount = len(li_elements) - 2
-            print(pageCount)
-        else:
-            print(f"Error fetching data: {response.status_code}")
+        #loop pages
         for counter in range(1, self.max_pages):
+            url = self.get_query_url(counter)
             print(counter)
+            #get site
+            response = requests.get(url, headers=self.ua_header)
+            soup = BeautifulSoup(response.text, "html.parser")
+            
+            if response.status_code != HTTPStatus.OK:
+                print(f"Error fetching data: {response.status_code}")
+                #Todo handle error 
+           #get api data 
             script_tag = soup.find("script", {"id": "__NEXT_DATA__"})
             if script_tag:
-                script_content = script_tag.string
                 try:
-                    json_data = json.loads(script_content)
+                    json_data = json.loads( script_tag.string)
+                    if(len(json_data["props"]["pageProps"]["searchResult"]["advertSummaryList"]["advertSummary"]) <= 0):
+                        print(f"ERROR no listings found on page {counter} i think iam done here :D")
+                        break
                     listings = json_data["props"]["pageProps"]["searchResult"]["advertSummaryList"]["advertSummary"]
                     insertData = self.get_formatted_listings_as_list(listings)
-                except json.JSONDecodeError as e:
-                    print(f"Error decoding JSON: {e}")
+                    self.db_connection.insert_data(self.table_name, insertData)
+                except Exception as e:
+                    print(f"Error in page {str(counter)} : {e}")
+            else:
+                print(f"Error in page {counter} : no script tag")
+            #handle last page
+            print(f"Page {counter} done")
+            time.sleep(10)
+            
         print(f"ERROR max pages reached: {self.max_pages}")
 
     # This method returns the listings as an array of json objects with only a selection of attributes.
@@ -220,7 +241,7 @@ class WillhabenQueryBuilder:
             print("Error converting " + errorMassage + ":" + str(value))
             raise TypeError("Error converting " + errorMassage + ":" + str(value))
 
-    def get_formatted_listings_as_list(self, listings) -> List[dict]:
+    def get_formatted_listings_as_list(self, listings ) -> List[dict]:
      #   listings = self.get_full_listings_as_json()
 
         listing_list = []
@@ -303,5 +324,6 @@ class WillhabenQueryBuilder:
                 'coordinates': coordinates,
                 'is_private': is_private,
             }
+            
             listing_list.append(formatted_listing)
-       # return listings_json
+        return listing_list

@@ -1,8 +1,6 @@
 python:
-1: fix crawler
-2: add real sql statements
-        #also add create dynamic Table
-3: handle already inserted willhabenIds
+1: make better OOP
+    make url handler seperate
 4: check if all picture urls in api
 angular:
 1: add sqlLite to Angular
@@ -25,6 +23,7 @@ Future me:
             call python cli in angular
         add tests
         add const uppdater scrapper 
+        make nice animation for crawler :D 
             #email notification
     Angular:
         add cordnate selector in angular
@@ -37,11 +36,15 @@ Future me:
 
 done:
     python:
-        make page crawker loop #90%
+        make page crawker loop #99%
+        handle already inserted willhabenIds # naja
+        fix crawler
         make weird code better #everywhere i looked at :P
         add sqLite
         add all fields
         add sort and page handling in url 
+        add real sql statements
+        create dynamic Table
     angular: 
         make map with service Marker and popup o.O
     Docker: 
