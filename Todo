@@ -1,14 +1,49 @@
-1 fix For Loop
-2 add sqlLite
-3 add page crawler
-4 add map with sql Lite #fuckPhp
-5 add remove double OR errorhandler if will-haben Id Exist #Fuck Premium listenings
-6 add sort Handling
-7 sql handler 
-8 DockerFile
+python:
+1: fix crawler
+2: add real sql statements
+        #also add create dynamic Table
+3: handle already inserted willhabenIds
+4: check if all picture urls in api
+angular:
+1: add sqlLite to Angular
+2: add picture to Angular
+   #add addPicture but only load if popup is open
+3: edit sql dynamic on page 
+4: check how deploy work 
 
-6#lol make bugfix on there git xD 
-Future me 
-add interactive cli 
-make meme
-add Readme 
+docker: test after angular deploy
+release alpha
+
+Git Workflow:
+  test workflow build angular deploy
+ 
+
+Future me:
+    Python:
+        add interactive cli in python 
+            make an fucking main 
+            call python cli in angular
+        add tests
+        add const uppdater scrapper 
+            #email notification
+    Angular:
+        add cordnate selector in angular
+        add öffis maybe dynamisch
+    Github:
+        make workflow for ang& python & docker 
+        make meme
+        add Readme
+
+
+done:
+    python:
+        make page crawker loop #90%
+        make weird code better #everywhere i looked at :P
+        add sqLite
+        add all fields
+        add sort and page handling in url 
+    angular: 
+        make map with service Marker and popup o.O
+    Docker: 
+        python+angular redaht container
+     
