@@ -10,7 +10,7 @@ willhaben_query.set_category(CATEGORY.RENT_APARTMENT) \
     .set_rows(250) \
     .set_price_from(200) \
     .set_price_to(1000) \
-    .set_size_from(40) \
+    .set_size_from(20) \
     .set_size_to(10000) \
 
     
