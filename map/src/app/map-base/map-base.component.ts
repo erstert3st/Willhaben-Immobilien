@@ -18,12 +18,7 @@ export class MapBaseComponent implements AfterViewInit {
       zoom: 11
     });
 
-/* 
-    marker.bindPopup(`
-      <b>Hello world!</b><br>
-      <a href="https://example.com">Visit our website</a><br>
-      <img src="https://example.com/image.jpg" alt="Example Image">
-    `).openPopup(); */
+
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
@@ -35,6 +30,6 @@ export class MapBaseComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.markerService.makeMarkers(this.map);
+    this.markerService.makeMarkers(this.map, "select * from test1");
   }
 }
