@@ -52,6 +52,10 @@ done:
         add sort and page handling in url 
         add real sql statements
         create dynamic Table
+        100% css + var in css + bootstrap
+        configurer base with edit select
+        debug angular + setup type in marker
+        add Pictures in api 
     angular: 
         make map with service Marker and popup o.O
     Docker: 
@@ -59,8 +63,15 @@ done:
      
 
 PlanForToday:
-  ##  100% css + var in css + bootstrap
-    configurer base with edit select
-   ## debug angular + setup type in marker
-    check add Pictures in api + modular load
-   ## add öffis or timeChecker
+    fix cluster https://codesandbox.io/p/sandbox/leaflet-markerclusters-performance-test-addlayersclearlayers-q08xl?file=%2Fsrc%2FClusters.jsx%3A8%2C7-8%2C21
+        ##fix imageUrls object in js
+    try somehow the TIME_TO_LOACATION 
+        #maybe over google maps api
+        #maybe over öffis
+        #maybe over own apis
+    make better popup with lazy load of pictures
+    test deploy on docker
+        #inform how to deploy in angular
+    docker scraper 1h 
+        #scraper for adding new within Time_to_location
+        #add container run scraper.py 

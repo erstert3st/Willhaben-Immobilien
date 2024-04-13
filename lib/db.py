@@ -48,7 +48,7 @@ class Db_handler:
                 
     # we need the single listing insert method later :D 
     def insert_listing(self, table_name, listing):
-        columns = 'willhaben_id, platform, summary, property_type, number_of_rooms, date_published, price, size_qm, url, location, description, state, district, seller, estate_size_living_area, floor, published, country, location_id, location_quality, address, postcode, property_type_flat, free_area_type_name, free_area_total, upselling_ad_searchresult, coordinates, is_private'
+        columns = 'willhaben_id, platform, summary, property_type, number_of_rooms, date_published, price, size_qm, url,image_urlsm  location, description, state, district, seller, estate_size_living_area, floor, published, country, location_id, location_quality, address, postcode, property_type_flat, free_area_type_name, free_area_total, upselling_ad_searchresult, coordinates, is_private'
         placeholders = ', '.join('?' * len(listing))
         sql = f"INSERT OR REPLACE INTO {table_name} ({columns}) VALUES ({placeholders})"
         self.cursor.execute(sql, list(listing.values()))
@@ -66,6 +66,7 @@ class Db_handler:
                 price INTEGER,
                 size_qm INTEGER,
                 url TEXT,
+                image_urls TEXT,
                 location TEXT,
                 description TEXT,
                 state TEXT,

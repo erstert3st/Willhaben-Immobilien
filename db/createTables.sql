@@ -8,6 +8,7 @@
                 price INTEGER,
                 size_qm INTEGER,
                 url TEXT,
+                image_urls TEXT,
                 location TEXT,
                 description TEXT,
                 state TEXT,

@@ -279,6 +279,7 @@ class WillhabenQueryBuilder:
             is_private = attributeDict.get('ISPRIVATE', "69")
             size_qm = attributeDict.get('ESTATE_SIZE', "69")
             url = attributeDict.get('SEO_URL', "")
+            image_urls = attributeDict.get('ALL_IMAGE_URLS', "")
             # convert int
             willhaben_id = self.tryConvert(listing.get('id', "0"), int, "willhaben_id int")
             size_qm = self.tryConvert(size_qm, int, "size_qm int")
@@ -304,6 +305,7 @@ class WillhabenQueryBuilder:
                 'price': price,
                 'size_qm': size_qm,
                 'url': "https://www.willhaben.at/iad/" + url,
+                'image_urls': image_urls,
                 'location': location,
                 'description': description,
                 'state': state,
