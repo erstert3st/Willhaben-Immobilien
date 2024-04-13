@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
-import 'leaflet-control-window';
-import 'leaflet-minimap';
-import { MiniMap } from 'leaflet-control-mini-map';
+
 
 @Injectable({
   providedIn: 'root'
@@ -38,10 +36,6 @@ export class LayerService {
       "Basemap AT Orthofoto": basemapATOrthofotoLayer,
       "Basemap AT High DPI": basemapATHighDpiLayer
     };
-    new MiniMap(layer, options).addTo(map);
-
-    var miniMap = new L.Control.MiniMap(tileLayer).addTo(map);
-      const miniMap = new L.Control.MiniMap(L.layerGroup([baseLayer, transportLayer, thunderforestTransportDarkLayer, thunderforestLandscapeLayer, esriWorldImageryLayer, basemapATBasemapLayer, basemapATGrauLayer, basemapATOverlayLayer, basemapATOrthofotoLayer, basemapATHighDpiLayer]), { toggleDisplay: true }).addTo(map);
 
     L.control.layers(baseLayers).addTo(map);
   }

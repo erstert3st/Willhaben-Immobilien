@@ -1,1 +1,10 @@
-<div id="map" class="position-absolute w-100 h-100"></div>
+<div id="map" [ngStyle]="{'height': mapHeight}" class="position-absolute w-100">
+</div> 
+
+
+<app-map-config id="showConfigButton" class="custom-position" *ngIf="showConfigBool" [sqlString]="sqlString" (reciveSqlString) = "reciveSqlString($event)">
+</app-map-config>
+
+<div class="d-flex justify-content-center position-absolute bottom-0 w-100">
+    <button id="showConfigButton" class="btn btn-primary" (click)="showConfig()">{{ buttonText }}</button>
+</div>
