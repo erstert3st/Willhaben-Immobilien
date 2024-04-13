@@ -1,19 +1,21 @@
 python:
-1: make better OOP
-    make url handler seperate
-4: check if all picture urls in api
-5: add scraper to the run hourly or eddited by 
-6: add nice animations
-7: deploy pipeline ? oO GIVE ME TEHE EXE :D 
+1: add scraper to the run hourly and email  
+2: add cord Checker
+3: add nice animations
+4: deploy pipeline ? oO GIVE ME TEHE EXE :D 
 
+
+10: make better OOP  + make url handler seperate
+
+## öffis handler
 angular:
-1: add sqlLite to Angular
-2: add picture to Angular
-   #add addPicture but only load if popup is open
-3: make load to in browser #noBackend  
-4: check how deploy work 
-7: add configurer
-8: configurer for map with css and var to manipulate the hight
+
+1: make popup great + add picture to Angular
+2: check how deploy work
+3: add öffis to popup
+4: cordnate selector + insert Db
+
+10: make nicer HTML + animation
 
 docker: test after angular deploy
 release alpha
@@ -26,20 +28,25 @@ Future me:
     Python:
         add interactive cli in python 
             make an fucking main 
-
-        add tests
-        add const uppdater scrapper 
-        make nice animation for crawler :D 
-            #email notification
+        add tests 
+   
     Angular:
-        add cordnate selector in angular
-        add öffis maybe dynamisch
+        ##everything is in timeline :D o wait tests....
     Github:
         make workflow for ang& python & docker 
         make meme
         add Readme
     Recyclin bin:
                 #call python cli in angular
+
+
+
+
+
+
+
+
+
 
 done:
     python:
