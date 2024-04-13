@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --watch",
-    "build": "ng build  && npm run start",
+    "start": "ng serve ",
+    "start1": "ng serve --watch",
+    "build": "ng build  && npm run start ",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -18,7 +19,10 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.3",
     "@angular/router": "^17.3.3",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "leaflet": "^1.9.4",
+    "leaflet-control-window": "^1.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.14.4"

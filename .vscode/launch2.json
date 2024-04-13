@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python Debugger: simple File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "samples/sample.py",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Attach (remote debugger docker)",
+      "type": "debugpy",
+      "request": "attach",
+      "port": 5678,
+      "host": "127.0.0.1",
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "."
+        }
+      ]
+    },
+    {
+      "name": "angular",
+      "type": "chrome",
+      "request": "launch",
+      "preLaunchTask": "npm: start",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import { MarkerService } from '../services/marker.service';
+import { LayerService } from '../services/layers.service';
 
 @Component({
   selector: 'app-map-base',
@@ -11,25 +12,18 @@ import { MarkerService } from '../services/marker.service';
 })
 export class MapBaseComponent implements AfterViewInit {
   private map: any;
-
+  constructor(private markerService: MarkerService, private layerService: LayerService) { }
   private initMap(): void {
     this.map = L.map('map', {
-      center: [ 47.0707, 15.4395 ],
-      zoom: 11
+      center: [47.0707, 15.4395],
+      zoom: 13
     });
-
-
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tiles.addTo(this.map);
   }
 
-  constructor(private markerService: MarkerService) { }
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.markerService.makeMarkers(this.map, "select * from test1");
+    this.layerService.addLayers(this.map);
+    this.markerService.makeMarkers(this.map, "select * from test1 LIMIT 20");
   }
 }

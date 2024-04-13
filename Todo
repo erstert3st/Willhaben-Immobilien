@@ -57,3 +57,10 @@ done:
     Docker: 
         python+angular redaht container
      
+
+PlanForToday:
+  ##  100% css + var in css + bootstrap
+    configurer base with edit select
+   ## debug angular + setup type in marker
+    check add Pictures in api + modular load
+   ## add öffis or timeChecker
