@@ -35,6 +35,7 @@ Future me:
     Angular:
         ##everything is in timeline :D o wait tests....
          make cluster/single over size of select
+        add all api keys
     Github:
         make workflow for ang& python & docker 
         make meme

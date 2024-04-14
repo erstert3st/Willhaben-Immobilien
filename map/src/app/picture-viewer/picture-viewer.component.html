@@ -1,0 +1,7 @@
+<div class="picture-viewer d-flex flex-column align-items-center" style="height: 600px;">
+    <img [src]="images[currentImageIndex]" class="img-fluid mb-3" style="max-height: 500px;" alt="Image">
+    <div class="d-flex justify-content-between w-100">
+      <button (click)="previousImage()" class="btn btn-primary">Previous</button>
+      <button (click)="nextImage()" class="btn btn-primary">Next</button>
+    </div>
+  </div>

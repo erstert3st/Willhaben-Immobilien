@@ -1,13 +1,14 @@
+import { Component, inject } from '@angular/core';
+import { AsyncPipe, NgComponentOutlet } from '@angular/common';
 import { Injectable } from '@angular/core';
-
 import { TableData } from '../models/tableData';  // Import the interface
-
+import { PictureViewerComponent } from '../picture-viewer/picture-viewer.component';
 @Injectable({
   providedIn: 'root'
 })
 export class PopupService {
   constructor() { }
-
+  private adList = inject(PictureViewerComponent).getAds();
   makePopup(tableData: TableData): string {
     let popup: string = `
       <b>${tableData.summary} </b><br>

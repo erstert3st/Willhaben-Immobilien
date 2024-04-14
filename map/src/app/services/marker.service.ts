@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PopupService } from './popup.service';
-
 import * as L from 'leaflet';
+import 'leaflet-responsive-popup';
 import { DataService } from './data.service';
 import { TableData } from '../models/tableData';
 
@@ -33,7 +33,9 @@ export class MarkerService {
         const markerToAdd = L.marker(new L.LatLng(lat, lon), {
           icon: this.customIcon
         });
-        markerToAdd.bindPopup(this.popupService.makePopup(rowData));
+        let popup: L.ResponsivePopup = new  L.ResponsivePopup({ hasTip: false, autoPan: false, offset: [15, 20] }).setContent(this.popupService.makePopup(rowData));
+
+        markerToAdd.bindPopup(popup);
         markerToAdd.addTo(this.layerGroup);
         counter++;
         console.log(`Added marker ${counter} `);

@@ -7,11 +7,12 @@ import { MapConfigComponent } from '../map-config/map-config.component';
 import { TableData } from '../models/tableData';
 import { DataService } from '../services/data.service';
 import { MarkerService } from '../services/marker.service';
+import { PictureViewerComponent } from '../picture-viewer/picture-viewer.component';
 
 @Component({
   selector: 'app-map-base',
   standalone: true,
-  imports: [CommonModule, MapConfigComponent],
+  imports: [CommonModule, MapConfigComponent, PictureViewerComponent],
   templateUrl: './map-base.component.html',
   styleUrl: './map-base.component.css'
 })
