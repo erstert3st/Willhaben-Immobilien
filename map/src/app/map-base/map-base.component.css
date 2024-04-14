@@ -5,3 +5,9 @@
 #showConfigButton {
   z-index: 1000;
 }
+
+
+.custom-position {
+position: absolute;
+top: 50%;
+}

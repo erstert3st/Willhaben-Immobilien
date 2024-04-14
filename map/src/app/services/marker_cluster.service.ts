@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core';
 import { PopupService } from './popup.service';
+import { DataService } from './data.service';
+import { TableData } from '../models/tableData';  // Import the interface
 
 import * as L from 'leaflet';
-import { DataService } from './data.service';
-import { TableData } from '../models/tableData';
+import 'leaflet.markercluster';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MarkerService {
-  layerGroup = L.layerGroup();
+export class MarkerClusterService {
+  markerCluster = L.markerClusterGroup({
+    maxClusterRadius: 50 // Increase or decrease this value as needed
+  });
   customIcon = new L.Icon({
     iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
     iconSize: [25, 41]
@@ -17,9 +20,10 @@ export class MarkerService {
   constructor(private popupService: PopupService, private dataService: DataService
   ) { }
   makeMarkers(map: L.Map, tableRows: Array<TableData>): void {
-    this.layerGroup.clearLayers();
+
+    const start = window.performance.now();
+    this.markerCluster.clearLayers();
     console.log(tableRows);
-    map.addLayer(this.layerGroup);
     const markersToAdd: L.Layer[] = [];
     let counter = 0;
 
@@ -34,15 +38,23 @@ export class MarkerService {
           icon: this.customIcon
         });
         markerToAdd.bindPopup(this.popupService.makePopup(rowData));
-        markerToAdd.addTo(this.layerGroup);
+        markersToAdd.push(markerToAdd);
         counter++;
         console.log(`Added marker ${counter} `);
 
       } else {
         console.log("lat or lon is weird");
       }
+
+      this.markerCluster.addLayers(markersToAdd);
+      map.addLayer(this.markerCluster);
+
+      const end = window.performance.now();
+      console.log(`Time of adding markers and clusters: ${end - start}ms`);
+
     });
-  };
+  }
+
 }
 
 

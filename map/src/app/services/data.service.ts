@@ -15,4 +15,8 @@ export class DataService {
   executeQuery(sql: string): Observable<TableData[]> {
     return this.http.post<TableData[]>(this.apiUrl, { sql });
   }
+
+  getDataFromDb(dbStatemant: string) {
+    return this.executeQuery(dbStatemant);
+  }
 }

@@ -29,6 +29,8 @@ Future me:
         add interactive cli in python 
             make an fucking main 
         add tests 
+        next db update also add: 
+            ##make lat/split in python
    
     Angular:
         ##everything is in timeline :D o wait tests....
@@ -73,18 +75,23 @@ done:
 PlanForToday:
     ##fix cluster https://codesandbox.io/p/sandbox/leaflet-markerclusters-performance-test-addlayersclearlayers-q08xl?file=%2Fsrc%2FClusters.jsx%3A8%2C7-8%2C21
     ##fix imageUrls object in js
-
-    try somehow the TIME_TO_LOACATION -.-"
-        #maybe over google maps api
-        #maybe over öffis
-        #maybe over own apis
+    ## fix cluster/singelton handler 
+    ## "fixed" tiles border
+    ## "fixed" png bug
     make better popup 
         ##with lazy load of pictures
     make sql Handler
-    make lat/split in python
+        #add all necessary fields
+
 nextDay:
+    poligon selector
+
     test deploy on docker
         #inform how to deploy in angular
     docker scraper 1h 
         #scraper for adding new within Time_to_location
         #add container run scraper.py 
+    try somehow the TIME_TO_LOACATION -.-"
+        #maybe over google maps api
+        #maybe over öffis
+        #maybe over own apis

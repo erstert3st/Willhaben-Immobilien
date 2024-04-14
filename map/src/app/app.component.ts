@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MapBaseComponent} from "./map-base/map-base.component";
-import {MarkerService} from './services/marker.service'
+import {MarkerClusterService} from './services/marker_cluster.service'
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import {MarkerService} from './services/marker.service'
   imports: [RouterOutlet, MapBaseComponent,],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [MarkerService]
+  providers: [MarkerClusterService]
 })
 export class AppComponent {
   title = 'map';

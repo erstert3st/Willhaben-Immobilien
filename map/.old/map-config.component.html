@@ -1,0 +1,15 @@
+<h2>{{sqlString}}</h2>
+
+<div class="form-group">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="d-flex mb-2 mr-2">
+            <input type="text" formControlName="sql"  class="ml-2">
+            @if (submitted && f['sql'].errors) {
+                <div class="error m-2"> sql is invalid</div>
+            }
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </form>
+</div>
