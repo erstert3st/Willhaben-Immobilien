@@ -17,7 +17,7 @@ export class MapBaseComponent implements AfterViewInit {
   private map:any;
   mapHeight = '100%';
   buttonText = 'Show config';
-  sqlString:string = 'select * from test1 LIMIT 20';
+  sqlString:string = 'select * from test2 LIMIT 20';
   showConfigBool = false;
   constructor(private markerService: MarkerService, private layerService: LayerService) { }
   private initMap(): void {

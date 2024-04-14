@@ -32,6 +32,7 @@ Future me:
    
     Angular:
         ##everything is in timeline :D o wait tests....
+         make cluster/single over size of select
     Github:
         make workflow for ang& python & docker 
         make meme
@@ -70,13 +71,18 @@ done:
      
 
 PlanForToday:
-    fix cluster https://codesandbox.io/p/sandbox/leaflet-markerclusters-performance-test-addlayersclearlayers-q08xl?file=%2Fsrc%2FClusters.jsx%3A8%2C7-8%2C21
-        ##fix imageUrls object in js
-    try somehow the TIME_TO_LOACATION 
+    ##fix cluster https://codesandbox.io/p/sandbox/leaflet-markerclusters-performance-test-addlayersclearlayers-q08xl?file=%2Fsrc%2FClusters.jsx%3A8%2C7-8%2C21
+    ##fix imageUrls object in js
+
+    try somehow the TIME_TO_LOACATION -.-"
         #maybe over google maps api
         #maybe over öffis
         #maybe over own apis
-    make better popup with lazy load of pictures
+    make better popup 
+        ##with lazy load of pictures
+    make sql Handler
+    make lat/split in python
+nextDay:
     test deploy on docker
         #inform how to deploy in angular
     docker scraper 1h 

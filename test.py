@@ -1,3 +1,2 @@
-import sqlite3
-connection = sqlite3.connect("db/noData.db")
-print(connection.total_changes)
+from alive_progress.styles import showtime, Show
+showtime(pattern='boat|fish|crab')

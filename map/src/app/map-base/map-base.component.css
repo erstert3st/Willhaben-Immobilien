@@ -5,21 +5,3 @@
 #showConfigButton {
   z-index: 1000;
 }
-.leaflet-tile {
-    border: none !important;
-  }
-
-  *,
-*:focus,
-*:hover {
-    outline: none;
-}
-.bottom-portion {
-  bottom: 0;
-  height: 30%;
-}
-
-.custom-position {
-  position: absolute;
-  top: 71%;
-}
