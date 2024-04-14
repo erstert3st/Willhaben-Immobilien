@@ -16,6 +16,7 @@ export class PopupService {
       <b>Rooms: </b>${tableData.number_of_rooms}<br>
       <b>Living Area: </b>${tableData.estate_size_living_area} m²<br>
       ${tableData.floor ? `<b>Floor: </b>${tableData.floor}<br>` : ''}
+      <b>location: </b>${tableData.location}<br>
       <b>Property Type Flat: </b>${tableData.property_type_flat}<br>
       <b>Free Area Type Name: </b>${tableData.free_area_type_name}<br>
       <b>Free Area Total: </b>${tableData.free_area_total}<br>

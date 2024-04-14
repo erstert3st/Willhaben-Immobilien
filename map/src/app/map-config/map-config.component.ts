@@ -1,5 +1,5 @@
-import { Input, Output, EventEmitter, Component, OnInit, AfterViewInit} from '@angular/core';
-import { NgxAngularQueryBuilderModule,QueryBuilderClassNames,QueryBuilderConfig } from "ngx-angular-query-builder";
+import { Input, Output, EventEmitter, Component, OnInit, AfterViewInit } from '@angular/core';
+import { NgxAngularQueryBuilderModule, QueryBuilderClassNames, QueryBuilderConfig } from "ngx-angular-query-builder";
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,23 +11,39 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './map-config.component.html',
   styleUrl: './map-config.component.css'
 })
-export class MapConfigComponent  {
+export class MapConfigComponent {
   constructor() { }
   @Input() sqlString: string = "no Input";
   @Output() reciveSqlString = new EventEmitter<string>();
-//https://github.com/raysuelzer/ngx-angular-query-builder
+  //https://github.com/raysuelzer/ngx-angular-query-builder
+  //https://stackblitz.com/edit/angular-material-13-starter-x1xj4z-p5tddv?file=src%2Fapp%2Fapp.component.ts
+  //std
   query = {
     condition: 'and',
     rules: [
-      { field: 'age', operator: '<=', value: 'Bob' },
-      { field: 'gender', operator: '>=', value: 'm' }
+      { field: 'property_type', operator: '=', value: "test" },
     ]
   };
 
   config: QueryBuilderConfig = {
     fields: {
-      age: { name: 'Age', type: 'number' },
-      gender: {
+      property_type: { name: 'Typ', type: 'string' },
+      number_of_rooms: { name: 'Zimmer', type: 'number' },
+      price: { name: 'Preis', type: 'number' },
+      size_qm: { name: 'Wohnfläche', type: 'number' },
+      location: { name: 'Ort', type: 'string' },
+      floor: { name: 'Stockwerk', type: 'string' },
+      address: { name: 'Adresse', type: 'string' },
+      property_type_flat: { name: 'ZusatzTyp', type: 'string' },
+      free_area_type_name: { name: 'Zusatz', type: 'string' },
+      free_area_total: { name: 'FlächeZusatz', type: 'number' },
+      estate_size_living_area: { name: 'Wohnzimmer', type: 'number' },
+      is_private: { name: 'Privat', type: 'number' }
+    }
+  }
+/*   CREATE TABLE insertName (
+
+gender: {
         name: 'Gender',
         type: 'category',
         options: [
@@ -35,10 +51,21 @@ export class MapConfigComponent  {
           { name: 'Female', value: 'f' }
         ]
       }
-    }
-  }
 
-   classNames: QueryBuilderClassNames = {
+    property_type TEXT,
+    number_of_rooms INTEGER,
+    price INTEGER,
+    size_qm INTEGER,
+    location TEXT,
+    estate_size_living_area INTEGER,
+    floor TEXT,
+    address TEXT,
+    property_type_flat TEXT,
+    free_area_type_name TEXT,
+    free_area_total INTEGER,
+    is_private INTEGER
+) */
+  classNames: QueryBuilderClassNames = {
     removeIcon: "fa fa-minus",
     addIcon: "fa fa-plus",
     arrowIcon: "fa fa-chevron-right px-2",
