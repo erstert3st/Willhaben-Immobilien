@@ -25,13 +25,29 @@ export class MapConfigComponent {
     ]
   };
 
-  public generateSql() {
-    let sqlQuery = 'SELECT * FROM table WHERE ';
-    const conditions = this.query.rules.map(rule => `${rule.field} ${rule.operator} ${rule.value}`);
-    sqlQuery += conditions.join(` ${this.query.condition} `);
-    console.log(sqlQuery);
+  public generateSqlWhere(query: any = this.query) {
+    let sqlQuery = '';
+    if (query.rules) {
+      const conditions = query.rules.map((rule: any) => {
+        if ('condition' in rule && 'rules' in rule) {
+          // This is a nested condition, so handle it recursively
+          return `${this.generateSqlWhere(rule)}`;
+        } else {
+          // This is a simple rule, so handle it directly
+          return `${rule.field} ${rule.operator} ${rule.value}`;
+        }
+      });
+      sqlQuery += conditions.join(` ${query.condition} `);
+    }
+    return sqlQuery;
   }
 
+  public generateSql() {
+    let sqlQuery = 'Select * from test2 where';
+    let where = this.generateSqlWhere();
+    sqlQuery = sqlQuery + where;
+    console.log(sqlQuery);
+  }
   config: QueryBuilderConfig = {
     fields: {
       property_type: { name: 'Typ', type: 'string' },
