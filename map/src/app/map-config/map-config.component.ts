@@ -52,19 +52,7 @@ gender: {
         ]
       }
 
-    property_type TEXT,
-    number_of_rooms INTEGER,
-    price INTEGER,
-    size_qm INTEGER,
-    location TEXT,
-    estate_size_living_area INTEGER,
-    floor TEXT,
-    address TEXT,
-    property_type_flat TEXT,
-    free_area_type_name TEXT,
-    free_area_total INTEGER,
-    is_private INTEGER
-) */
+*/
   classNames: QueryBuilderClassNames = {
     removeIcon: "fa fa-minus",
     addIcon: "fa fa-plus",
@@ -91,6 +79,32 @@ gender: {
     inputControl: "form-control",
     inputControlSize: "col-auto"
   };
-
+/* 
+  classNames: QueryBuilderClassNames = {
+    removeIcon: "fa fa-minus",
+    addIcon: "fa fa-plus",
+    arrowIcon: "fa fa-chevron-right px-2",
+    button: "btn",
+    buttonGroup: "btn-group",
+    rightAlign: "order-12 ml-auto",
+    switchRow: "d-flex px-2",
+    switchGroup: "d-flex align-items-center",
+    switchRadio: "custom-control-input",
+    switchLabel: "custom-control-label",
+    switchControl: "custom-control custom-radio custom-control-inline",
+    row: "row p-2 m-1",
+    rule: "border",
+    ruleSet: "border",
+    invalidRuleSet: "alert alert-danger",
+    emptyWarning: "text-danger mx-auto",
+    operatorControl: "form-control",
+    operatorControlSize: "col-auto pr-0",
+    fieldControl: "form-control",
+    fieldControlSize: "col-auto pr-0",
+    entityControl: "form-control",
+    entityControlSize: "col-auto pr-0",
+    inputControl: "form-control",
+    inputControlSize: "col-auto"
+  }; */
 
 }
