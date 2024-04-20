@@ -7,7 +7,8 @@ import { MapConfigComponent } from '../map-config/map-config.component';
 import { TableData } from '../models/tableData';
 import { DataService } from '../services/data.service';
 import { MarkerService } from '../services/marker.service';
-//import 'leaflet-trace'; // Import the 'leaflet-trace' module
+import { addDraw } from './selector';
+
 
 @Component({
   selector: 'app-map-base',
@@ -28,19 +29,11 @@ export class MapBaseComponent implements AfterViewInit {
   private initMap(): void {
     this.map = L.map('map', {
       center: [47.0707, 15.4395],
-      zoom: 13
+      zoom: 13,
     });
-/*     new L.ControlTrace({
-      trace: true,
-      draw: {
-        circlemarker: false, //Leaflet.Trace includes a slightly altered version of the L.Draw.CircleMarker
-      },
-      edit: {
-        featureGroup: drawnItems,
-      },
-    }).addTo(map) */
-  }
 
+
+  };
 
   
   public reciveSqlString(event: any) {
@@ -77,6 +70,7 @@ export class MapBaseComponent implements AfterViewInit {
     this.initMap();
     this.layerService.addLayers(this.map);
     this.reciveSqlString(this.sqlString)
+    addDraw(this.map);
   }
 }
 
