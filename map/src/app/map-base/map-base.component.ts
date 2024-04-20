@@ -7,6 +7,7 @@ import { MapConfigComponent } from '../map-config/map-config.component';
 import { TableData } from '../models/tableData';
 import { DataService } from '../services/data.service';
 import { MarkerService } from '../services/marker.service';
+//import 'leaflet-trace'; // Import the 'leaflet-trace' module
 
 @Component({
   selector: 'app-map-base',
@@ -29,7 +30,19 @@ export class MapBaseComponent implements AfterViewInit {
       center: [47.0707, 15.4395],
       zoom: 13
     });
+/*     new L.ControlTrace({
+      trace: true,
+      draw: {
+        circlemarker: false, //Leaflet.Trace includes a slightly altered version of the L.Draw.CircleMarker
+      },
+      edit: {
+        featureGroup: drawnItems,
+      },
+    }).addTo(map) */
   }
+
+
+  
   public reciveSqlString(event: any) {
     this.sqlString = event;
 
@@ -66,3 +79,7 @@ export class MapBaseComponent implements AfterViewInit {
     this.reciveSqlString(this.sqlString)
   }
 }
+
+
+
+//mklink  C:\Users\user\Documents\Willhaben-Immobilien\map\Todo C:\Users\user\Documents\Willhaben-Immobilien\Todo

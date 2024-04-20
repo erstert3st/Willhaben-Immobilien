@@ -3,8 +3,9 @@ python:
 2: add cord Checker
 3: add nice animations
 4: deploy pipeline ? oO GIVE ME TEHE EXE :D 
-
-
+5: make Configurer ready w
+6: make öffis scrapper  
+7: make better popup 
 10: make better OOP  + make url handler seperate
 
 ## öffis handler
@@ -45,7 +46,13 @@ Future me:
 
 
 
-
+smallImprovemendsUnderWeek:
+    make error notification:
+        no Data Found
+        sql not valid 
+    make Table Name as Probertry:
+        add drop down
+        make him as proberty
 
 
 
@@ -59,39 +66,72 @@ done:
         make weird code better #everywhere i looked at :P
         add sqLite
         add all fields
-        add sort and page handling in url 
-        add real sql statements
+
         create dynamic Table
+
+        add Pictures in api 
+
+    angular: 
         100% css + var in css + bootstrap
         configurer base with edit select
         debug angular + setup type in marker
-        add Pictures in api 
-    angular: 
+        add all fields
         make map with service Marker and popup o.O
+        ql check if works and bind to button
+        check if sql is valid?
+        "fixed" tiles border
+        "fixed" png bug
+        fix cluster/singelton handler 
+        fix imageUrls object in js
+        add all necessary fields
+        add sort and page handling in url 
+        add real sql statements
     Docker: 
         python+angular redaht container
      
 
-PlanForToday:
-    ##fix cluster https://codesandbox.io/p/sandbox/leaflet-markerclusters-performance-test-addlayersclearlayers-q08xl?file=%2Fsrc%2FClusters.jsx%3A8%2C7-8%2C21
-    ##fix imageUrls object in js
-    ## fix cluster/singelton handler 
-    ## "fixed" tiles border
-    ## "fixed" png bug
-    make better popup 
-        ##with lazy load of pictures
-    make sql Handler
-        #add all necessary fields
+PlanForDomeDay:
+    with lazy load of pictures
+    make sql Handler -> WTF was that task ?!?!? 
+
 
 nextDay:
-    poligon selector
+    poligon selector:
+        find and add Plugin
+            make Save To Db ?!  
+        Find a way to only see in the poligons
+                 Python check if are in with dbs ? -> would be nice for auto notifications 
+                 leaflet solution ? 
+    Configurer:
+        ##done with sql emit
+        ##done with check sql
+    notification:
+        add notification for invalid sql
+        add notification for no data found
+        add notification no backend found
+        
+ 
+    Popup:
+        try to inject directly the js in html par #Pfusch of the month 
+    
+    Öffis:
+        find a way to get the data:
+            google maps api
+            Öffis api
+            try the öbb scraper ? 
+        Display: 
+        ███████╗██╗   ██╗ ██████╗██╗  ██╗
+        ██╔════╝██║   ██║██╔════╝██║ ██╔╝
+        █████╗  ██║   ██║██║     █████╔╝ 
+        ██╔══╝  ██║   ██║██║     ██╔═██╗ 
+        ██║     ╚██████╔╝╚██████╗██║  ██╗
+        ╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝
+                                         
 
-    test deploy on docker
+    
         #inform how to deploy in angular
-    docker scraper 1h 
         #scraper for adding new within Time_to_location
         #add container run scraper.py 
-    try somehow the TIME_TO_LOACATION -.-"
         #maybe over google maps api
         #maybe over öffis
         #maybe over own apis
