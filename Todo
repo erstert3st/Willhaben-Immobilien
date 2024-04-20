@@ -104,7 +104,10 @@ PlanForDomeDay:
 
 nextDay:
     poligon selector:
-        make Save To Db ?!  
+        make Save To Db:
+            test hook and write insert
+            make Load From Db 
+            
         Find a way to only see in the poligons
                  Python check if are in with dbs ? -> would be nice for auto notifications 
                  leaflet solution ? 
