@@ -32,6 +32,14 @@ export class MapBaseComponent implements AfterViewInit {
       zoom: 13,
     });
 
+    this.map.on('draw:created', function(e:any) {
+      var type = e.layerType,
+          layer = e.layer;
+     // drawnItems.addLayer(layer);
+     //add to db 
+      $('#polygon').val(JSON.stringify(layer.toGeoJSON())); //saving the layer to the input field using jQuery
+  });
+  
 
   };
 

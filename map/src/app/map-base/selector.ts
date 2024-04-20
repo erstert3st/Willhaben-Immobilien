@@ -15,16 +15,13 @@ import * as L from 'leaflet';
             iconUrl: 'link/to/image.png'
         }
     });
-
-
-
     
-
     let option: L.Control.DrawConstructorOptions = { position: 'topright',
     draw: {
         polyline: {
             shapeOptions: {
                 color: '#f357a1',
+                fillColor: '#f357a1' ,
                 weight: 10
             }
         },
@@ -35,22 +32,18 @@ import * as L from 'leaflet';
                 message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
             },
             shapeOptions: {
-                color: '#bada55'
+                color: '#02ff89',
+                fillColor: 'rgb(9, 255, 0)' ,
             }
         },
-        circle: false, // Turns off this drawing tool
-        rectangle: {
-            shapeOptions: {
-              fillColor: "red",
-            }
-        },
+        rectangle: false,
         marker: {
             icon: new MyCustomMarker()
         }
     },
     edit: {
         featureGroup: editableLayers, //REQUIRED!!
-        remove: false
+        remove: true
     }
 };
     

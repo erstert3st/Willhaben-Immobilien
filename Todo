@@ -87,6 +87,12 @@ done:
         add all necessary fields
         add sort and page handling in url 
         add real sql statements
+        ##done with sql emit
+        ##done with check sql
+        poligon:
+                find and add Plugin
+        find and add Plugin
+
     Docker: 
         python+angular redaht container
      
@@ -98,14 +104,12 @@ PlanForDomeDay:
 
 nextDay:
     poligon selector:
-        find and add Plugin
-            make Save To Db ?!  
+        make Save To Db ?!  
         Find a way to only see in the poligons
                  Python check if are in with dbs ? -> would be nice for auto notifications 
                  leaflet solution ? 
     Configurer:
-        ##done with sql emit
-        ##done with check sql
+
     notification:
         add notification for invalid sql
         add notification for no data found
