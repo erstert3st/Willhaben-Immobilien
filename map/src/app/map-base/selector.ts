@@ -7,6 +7,9 @@ import * as L from 'leaflet';
     let editableLayers = new L.FeatureGroup();
     map.addLayer(editableLayers);
     
+
+
+    
     let MyCustomMarker = L.Icon.extend({
         options: {
             shadowUrl: null,

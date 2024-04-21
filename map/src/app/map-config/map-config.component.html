@@ -1,2 +1,18 @@
-<query-builder [(ngModel)]='query' name="queryBuilder" [config]='config'></query-builder>
+<div class="d-flex justify-content-between">
+    <div>
+        <query-builder [(ngModel)]='query' name="queryBuilder" [config]='config'></query-builder>
+    </div>
+  
+    <div class="text-right">
+        <!-- New buttons, dropdown, and input field -->
+        <select class="ml-2">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+        </select>
+        <button class="btn btn-primary" style="margin-left: 5px;" (click)="loadOverlay()">Load</button>
+        <button class="btn btn-primary" style="margin-left: 5px;" (click)="saveOverlay()">Save</button>
+        <input type="text" style="margin-left: 5px; width: 20%;">
+        </div>
+</div>
 <button class="btn btn-primary ml-2" (click)="generateSql()">Generate SQL</button>

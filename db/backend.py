@@ -27,6 +27,35 @@ def query():
 
     return jsonify(data)
 
+@app.route('/insert', methods=['POST'])
+def insert():
+    data = request.get_json()
+    table = data.get('table', '')
+    values = data.get('values', {})
+
+    # Create a list of column names and a list of corresponding placeholders
+    columns = ', '.join(values.keys())
+    placeholders = ', '.join('?' for _ in values)
+
+    # Create the SQL query
+    sql = f'INSERT INTO {table} ({columns}) VALUES ({placeholders})'
+
+    # Connect to SQLite database
+    conn = sqlite3.connect('db/noData.db')
+
+    # Create a cursor object
+    cursor = conn.cursor()
+
+    # Execute the query
+    cursor.execute(sql, list(values.values()))
+
+    # Commit the changes and close the connection
+    conn.commit()
+    conn.close()
+
+    return jsonify({'status': 'success'})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=4201)

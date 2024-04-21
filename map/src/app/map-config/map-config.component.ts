@@ -13,6 +13,18 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './map-config.component.css'
 })
 export class MapConfigComponent {
+loadOverlay() {
+throw new Error('Method not implemented.');
+}
+saveOverlay() {
+throw new Error('Method not implemented.');
+}
+loadFunction() {
+throw new Error('Method not implemented.');
+}
+saveFunction() {
+throw new Error('Method not implemented.');
+}
   constructor() { }
   @Input() sqlString: string = "no Input";
   @Output() reciveSqlString = new EventEmitter<string>();

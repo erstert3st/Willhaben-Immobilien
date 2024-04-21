@@ -35,10 +35,19 @@ export class MapBaseComponent implements AfterViewInit {
     this.map.on('draw:created', function(e:any) {
       var type = e.layerType,
           layer = e.layer;
+      console.log(layer.toGeoJSON());
      // drawnItems.addLayer(layer);
      //add to db 
-      $('#polygon').val(JSON.stringify(layer.toGeoJSON())); //saving the layer to the input field using jQuery
+      //$('#polygon').val(JSON.stringify(layer.toGeoJSON())); //saving the layer to the input field using jQuery
   });
+  this.map.on('draw:edited', function(e:any) {
+    var type = e.layerType,
+        layer = e.layer;
+    console.log(layer.toGeoJSON());
+   // drawnItems.addLayer(layer);
+   //add to db 
+    //$('#polygon').val(JSON.stringify(layer.toGeoJSON())); //saving the layer to the input field using jQuery
+});
   
 
   };

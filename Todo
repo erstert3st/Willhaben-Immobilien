@@ -107,12 +107,14 @@ nextDay:
         make Save To Db:
             test hook and write insert
             make Load From Db 
+            find & try hook
+            insert that in a new table 
             
         Find a way to only see in the poligons
                  Python check if are in with dbs ? -> would be nice for auto notifications 
                  leaflet solution ? 
     Configurer:
-
+        make table selector
     notification:
         add notification for invalid sql
         add notification for no data found
