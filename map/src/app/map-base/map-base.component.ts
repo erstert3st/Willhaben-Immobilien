@@ -7,7 +7,7 @@ import { MapConfigComponent } from '../map-config/map-config.component';
 import { TableData } from '../models/tableData';
 import { DataService } from '../services/data.service';
 import { MarkerService } from '../services/marker.service';
-import { addDraw } from './selector';
+import { DrawManager } from './selector';
 
 
 @Component({
@@ -19,40 +19,22 @@ import { addDraw } from './selector';
 })
 export class MapBaseComponent implements AfterViewInit {
 
-  private map:any;
+  private map: any;
+  private drawManager = new DrawManager();
   mapHeight = '100%';
   buttonText = 'Show config';
-  sqlString:string = 'select * from test2 LIMIT 20';
+  sqlString: string = 'select * from test2 LIMIT 20';
   showConfigBool = false;
-  constructor(private markerService: MarkerService, private markerClusterService: MarkerClusterService,
-     private layerService: LayerService, private dataServie: DataService) { }
+  constructor(private markerService: MarkerService, private markerClusterService: MarkerClusterService, private layerService: LayerService, private dataServie: DataService) { }
+
   private initMap(): void {
     this.map = L.map('map', {
       center: [47.0707, 15.4395],
       zoom: 13,
     });
-
-    this.map.on('draw:created', function(e:any) {
-      var type = e.layerType,
-          layer = e.layer;
-      console.log(layer.toGeoJSON());
-     // drawnItems.addLayer(layer);
-     //add to db 
-      //$('#polygon').val(JSON.stringify(layer.toGeoJSON())); //saving the layer to the input field using jQuery
-  });
-  this.map.on('draw:edited', function(e:any) {
-    var type = e.layerType,
-        layer = e.layer;
-    console.log(layer.toGeoJSON());
-   // drawnItems.addLayer(layer);
-   //add to db 
-    //$('#polygon').val(JSON.stringify(layer.toGeoJSON())); //saving the layer to the input field using jQuery
-});
-  
-
   };
 
-  
+
   public reciveSqlString(event: any) {
     this.sqlString = event;
 
@@ -87,7 +69,7 @@ export class MapBaseComponent implements AfterViewInit {
     this.initMap();
     this.layerService.addLayers(this.map);
     this.reciveSqlString(this.sqlString)
-    addDraw(this.map);
+    this.drawManager.addDraw(this.map);
   }
 }
 
