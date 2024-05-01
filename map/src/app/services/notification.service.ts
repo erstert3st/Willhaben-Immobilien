@@ -20,6 +20,7 @@ export class NotificationService {
     // The snackbar or dialog won't run outside the Angular's zone. 
     // Wrapping it in the run method fixes this issue.
     this.zone.run(() => {
+      console.error(message);
       this.snackbar.open(`Error: ${message}`, 'Okay', {
         panelClass: ['error-snack'], // add a class to snackbar to add custom styles
       });
@@ -35,6 +36,7 @@ export class NotificationService {
   }
 //info
   showNonErrorSnackBar(message: string, duration = 6000) {
+    console.log(message);
     this.snackbar.open(message, 'Okay', {
       panelClass: ['non-error-snack'],
       duration,
