@@ -5,15 +5,7 @@ import { NotificationService } from './services/notification.service';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  /**
-   * Error handling is essential so it gets loaded first.
-   * Because of this, we cant use dependency injection in the
-   * constructor for the services. Instead, we have to inject
-   * them manually with Injector.
-   */
-
   constructor(private injector: Injector) {}
-
   handleError(error: Error | HttpErrorResponse) {
     const notifier = this.injector.get(NotificationService);
     let message: string = "";
