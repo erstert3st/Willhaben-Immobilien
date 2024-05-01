@@ -4,6 +4,8 @@ import { Parser } from 'node-sql-parser';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+//rmme
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-map-config',
@@ -14,18 +16,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class MapConfigComponent {
 loadOverlay() {
-throw new Error('Method not implemented.');
+  throw new Error("I am a client error");
 }
 saveOverlay() {
-throw new Error('Method not implemented.');
+  this.http.get("brokenURL").subscribe();
 }
-loadFunction() {
-throw new Error('Method not implemented.');
-}
-saveFunction() {
-throw new Error('Method not implemented.');
-}
-  constructor() { }
+
+
+  constructor(private http: HttpClient) { }
   @Input() sqlString: string = "no Input";
   @Output() reciveSqlString = new EventEmitter<string>();
   //https://github.com/raysuelzer/ngx-angular-query-builder

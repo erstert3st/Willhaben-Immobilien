@@ -15,7 +15,6 @@ angular:
 2: check how deploy work
 3: add öffis to popup
 4: cordnate selector + insert Db
-
 10: make nicer HTML + animation
 
 docker: test after angular deploy
@@ -101,7 +100,20 @@ PlanForDomeDay:
     with lazy load of pictures
     make sql Handler -> WTF was that task ?!?!? 
 
-
+Today:
+    ErrorHandler:
+        Recherche
+        Display 
+        Add To every important class
+    (
+        Poligon shit:
+            insert in DB
+            maybe also load
+    )
+    OR 
+    (
+        testdata to work without backend 
+    )
 nextDay:
     poligon selector:
         make Save To Db:
@@ -145,3 +157,6 @@ nextDay:
         #maybe over google maps api
         #maybe over öffis
         #maybe over own apis
+        
+Next Project:
+5: better auth https://medium.com/@mohsinogen/angular-17-http-interceptors-guide-417e7c8ffada
