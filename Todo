@@ -74,6 +74,11 @@ done:
         add Pictures in api 
 
     angular: 
+        Display Warnings
+        Display Error
+        Css Warning/error
+        Add To every  dump  cryyyy Try catch 
+
         100% css + var in css + bootstrap
         configurer base with edit select
         debug angular + setup type in marker
@@ -104,12 +109,16 @@ PlanForDomeDay:
 
 Today:
     ErrorHandler:
-        Display Warnings
-        Add To every important class
-    (
+    make bootstrap Server error to angular one 
+    
         Poligon shit:
             insert in DB
             maybe also load
+                remove all current draws
+                inject all from db
+
+
+
     )
     OR 
     (

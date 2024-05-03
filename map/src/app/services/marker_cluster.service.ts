@@ -20,41 +20,46 @@ export class MarkerClusterService {
   constructor(private popupService: PopupService, private dataService: DataService
   ) { }
   makeMarkers(map: L.Map, tableRows: Array<TableData>): void {
+    try {
 
-    const start = window.performance.now();
-    this.markerCluster.clearLayers();
-    console.log(tableRows);
-    const markersToAdd: L.Layer[] = [];
-    let counter = 0;
 
-    //cordList
-    tableRows.forEach((rowData: TableData) => {
-      let coordinateArray = rowData.coordinates.split(',').map(Number);
-      const lat = coordinateArray[0];
-      const lon = coordinateArray[1];
-      // console.log("lat: " + lat + "lon: " + lon)
-      if (lat != undefined && lon != undefined) {
-        const markerToAdd = L.marker(new L.LatLng(lat, lon), {
-          icon: this.customIcon
-        });
-        markerToAdd.bindPopup(this.popupService.makePopup(rowData));
-        markersToAdd.push(markerToAdd);
-        counter++;
-        console.log(`Added marker ${counter} `);
+      const start = window.performance.now();
+      this.markerCluster.clearLayers();
+      console.log(tableRows);
+      const markersToAdd: L.Layer[] = [];
+      let counter = 0;
 
-      } else {
-        console.log("lat or lon is weird");
-      }
+      //cordList
+      tableRows.forEach((rowData: TableData) => {
+        let coordinateArray = rowData.coordinates.split(',').map(Number);
+        const lat = coordinateArray[0];
+        const lon = coordinateArray[1];
+        // console.log("lat: " + lat + "lon: " + lon)
+        if (lat != undefined && lon != undefined) {
+          const markerToAdd = L.marker(new L.LatLng(lat, lon), {
+            icon: this.customIcon
+          });
+          markerToAdd.bindPopup(this.popupService.makePopup(rowData));
+          markersToAdd.push(markerToAdd);
+          counter++;
+          console.log(`Added marker ${counter} `);
 
-      this.markerCluster.addLayers(markersToAdd);
-      map.addLayer(this.markerCluster);
+        } else {
+          console.log("lat or lon is weird");
+        }
 
-      const end = window.performance.now();
-      console.log(`Time of adding markers and clusters: ${end - start}ms`);
+        this.markerCluster.addLayers(markersToAdd);
+        map.addLayer(this.markerCluster);
 
-    });
+        const end = window.performance.now();
+        console.log(`Time of adding markers and clusters: ${end - start}ms`);
+
+      });
+    } catch (e) {
+      throw new Error("MarkersCluster could not be added to map");
+    }
   }
-
 }
+
 
 

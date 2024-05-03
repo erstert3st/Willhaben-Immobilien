@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { GlobalErrorHandler } from './global-error-handler';
 import { ServerErrorInterceptor } from './server-error.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),  provideHttpClient(),provideAnimations(),
@@ -14,6 +15,6 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: ServerErrorInterceptor,
       multi: true
-    }
+    }, provideAnimationsAsync()
   ]
 };

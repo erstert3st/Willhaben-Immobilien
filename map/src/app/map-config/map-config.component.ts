@@ -15,12 +15,12 @@ import { HttpClient } from "@angular/common/http";
   styleUrl: './map-config.component.css'
 })
 export class MapConfigComponent {
-loadOverlay() {
-  throw new Error("I am a client error");
-}
-saveOverlay() {
-  this.http.get("brokenURL").subscribe();
-}
+  loadOverlay() {
+    throw new Error("I am a client error");
+  }
+  saveOverlay() {
+    this.http.get("brokenURL").subscribe();
+  }
 
 
   constructor(private http: HttpClient) { }
@@ -39,39 +39,49 @@ saveOverlay() {
   };
 
   public generateSqlWhere(query: any = this.query) {
-    let sqlQuery = '';
-    if (query.rules) {
-      const conditions = query.rules.map((rule: any) => {
-        if ('condition' in rule && 'rules' in rule) {
-          // This is a nested condition, so handle it recursively
-          return `${this.generateSqlWhere(rule)}`;
-        } else {
-          // This is a simple rule, so handle it directly
-          return `(${rule.field} ${rule.operator} '${rule.value}')`;
-        }
-      });
-      sqlQuery += conditions.join(` ${query.condition} `);
+    try {
+      let sqlQuery = '';
+      if (query.rules) {
+        const conditions = query.rules.map((rule: any) => {
+          if ('condition' in rule && 'rules' in rule) {
+            // This is a nested condition, so handle it recursively
+            return `${this.generateSqlWhere(rule)}`;
+          } else {
+            // This is a simple rule, so handle it directly
+            return `(${rule.field} ${rule.operator} '${rule.value}')`;
+          }
+        });
+        sqlQuery += conditions.join(` ${query.condition} `);
+      }
+      return sqlQuery;
+    } catch (e) {
+      throw new Error("SQL where could not be generated");
     }
-    return sqlQuery;
   }
-
   public generateSql() {
-    let sqlQuery = 'Select * from test2 where ';
-    let where = this.generateSqlWhere();
-    sqlQuery = sqlQuery + where;
-    this.sqlString = sqlQuery;
-    this.checkAndSendSql()
-
+    try {
+      let sqlQuery = 'Select * from test2 where ';
+      let where = this.generateSqlWhere();
+      sqlQuery = sqlQuery + where;
+      this.sqlString = sqlQuery;
+      this.checkAndSendSql()
+    } catch (e) {
+      throw new Error("SQL  could not be generated");
+    }
   }
 
   public checkAndSendSql() {
-    console.log(this.sqlString);
     try {
-      const ast = this.parser.astify(this.sqlString); // parse the SQL statement
-      console.log('The SQL statement is valid.');
-      this.reciveSqlString.emit(this.sqlString);
-    } catch (error) {
-      console.error('The SQL statement is not valid:', error);
+      console.log(this.sqlString);
+      try {
+        const ast = this.parser.astify(this.sqlString); // parse the SQL statement
+        console.log('The SQL statement is valid.');
+        this.reciveSqlString.emit(this.sqlString);
+      } catch (error) {
+        console.error('The SQL statement is not valid:', error);
+      }
+    } catch (e) {
+      throw new Error("SQL could not send to Parent");
     }
   }
   config: QueryBuilderConfig = {

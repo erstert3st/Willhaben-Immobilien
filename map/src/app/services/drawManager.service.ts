@@ -1,12 +1,26 @@
 import 'leaflet-draw'
 import * as L from 'leaflet';
 
+import { Injectable } from '@angular/core';
 
-export class DrawManager {
+@Injectable({
+    providedIn: 'root',
+})
+export class DrawManagerService {
 
-    Drawdict: { [key: string]: any; } = {};
+    private _drawDict: { [key: string]: any; } = {};
+
     editableLayers = new L.FeatureGroup();
     constructor() { }
+
+
+    get drawDict(): { [key: string]: any; } {
+        return this._drawDict;
+    }
+
+    set drawDict(value: { [key: string]: any; }) {
+        this._drawDict = value;
+    }
 
     createdDraw(e: any) {
 
@@ -17,7 +31,7 @@ export class DrawManager {
 
     editedDraw(e: any, map: L.Map,) {
 
-        let layers:any = e.layers._layers;
+        let layers: any = e.layers._layers;
         for (let layerId in layers) {
             this.addDrawList(layerId, layers[layerId].toGeoJSON());
         }
@@ -25,21 +39,21 @@ export class DrawManager {
     }
 
     deletedDraw(e: any) {
-        let layers:any = e.layers._layers;
+        let layers: any = e.layers._layers;
         for (let layerId in layers) {
-            this.deleteDrawList(layerId);
+            this.deleteDrawListElement(layerId);
         }
 
     }
 
     addDrawList(leafletId: string, draw: any) {
         //overwrite existing one for now okay 
-        this.Drawdict[leafletId] = draw;
+        this.drawDict[leafletId] = draw;
         console.log(`added draw with leafletId: ${leafletId}`);
     }
-    deleteDrawList(leafletId: string) {
-        if (this.Drawdict.hasOwnProperty(leafletId)) {
-            delete this.Drawdict[leafletId];
+    deleteDrawListElement(leafletId: string) {
+        if (this.drawDict.hasOwnProperty(leafletId)) {
+            delete this.drawDict[leafletId];
             console.log(`deleted draw with leafletId: ${leafletId}`);
         } else {
             console.log(`draw with leafletId: ${leafletId} not found`);
@@ -48,7 +62,7 @@ export class DrawManager {
     }
 
     addDraw(map: L.Map) {
-       
+
         map.addLayer(this.editableLayers);
 
 
@@ -97,7 +111,7 @@ export class DrawManager {
         var drawControl = new L.Control.Draw(option);
         map.addControl(drawControl);
 
-        map.on(L.Draw.Event.CREATED,  (e: any) => {
+        map.on(L.Draw.Event.CREATED, (e: any) => {
             var type = e.layerType,
                 layer = e.layer;
 

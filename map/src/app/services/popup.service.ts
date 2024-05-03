@@ -9,7 +9,8 @@ export class PopupService {
   constructor() { }
 
   makePopup(tableData: TableData): string {
-    let popup: string = `
+    try {
+      let popup: string = `
       <b>${tableData.summary} </b><br>
       <b>Price: </b>${tableData.price} €<br>
       <b>Size: </b>${tableData.size_qm} m²<br>
@@ -28,6 +29,9 @@ export class PopupService {
       <a href="${tableData.url}">Link</a><br>
     `
 
-    return popup;
+      return popup;
+    } catch (e) {
+      throw new Error("Popup could not be created");
+    }
   }
 }

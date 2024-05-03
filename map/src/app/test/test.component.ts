@@ -1,11 +1,11 @@
 import { Component, NgZone } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [],
+  imports: [MatSnackBarModule],
   templateUrl: './test.component.html',
   styleUrl: './test.component.css'
 })

@@ -9,6 +9,7 @@ export class LayerService {
 
   constructor() { }
   addLayers(map: L.Map) {
+    try{
     const baseLayer = this.createBaseLayer();
     const transportLayer = this.createTransportLayer();
     const thunderforestTransportDarkLayer = this.createThunderforestTransportDarkLayer();
@@ -38,6 +39,9 @@ export class LayerService {
     };
 
     L.control.layers(baseLayers).addTo(map);
+  }catch(e){
+    throw new Error("Error: Map layers could not be added to map");
+   }
   }
 
   createBaseLayer() {
