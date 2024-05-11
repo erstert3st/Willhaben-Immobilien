@@ -17,20 +17,7 @@ import { DataManagerService } from '../services/data.service';
   styleUrl: './map-config.component.css'
 })
 export class MapConfigComponent {
-  loadOverlay() {
-    throw new Error("I am a client error");
-  }
-  saveOverlay() {
-    this.http.get("brokenURL").subscribe();
-  }
-  getDrawData(){
- this.dataManager.getListFromDb("SELECT * FROM test2").subscribe((dataList) => {
-  dataList.forEach(data:any => {
-    this.drawDict.push 
-    
-  });
- })
-  }
+
 
   constructor(private http: HttpClient, private drawManager: DrawManagerService, private dataManager: DataManagerService) { }
   @Input() sqlString: string = "no Input";
@@ -41,7 +28,38 @@ export class MapConfigComponent {
   parser = new Parser();
   drawNameList: string[] = [];
   drawDict: { [key: string]: any; } = {};
-  drawDictList: []
+ // drawDictList: []
+
+  loadOverlay() {
+    throw new Error("I am a client error");
+  }
+  saveOverlay() {
+    let tempName = "testInsert1";
+
+    let insertData:any = this.drawManager.drawDict;
+                    // if insertData == {} because why not JS ?????!?!?!?!
+    if(!insertData || Object.keys(insertData).length === 0) {
+      throw new Error("No Data to save")
+    }
+    let dataObject = { name: tempName, data: insertData };
+    let sqlString = JSON.stringify(dataObject);
+
+    this.dataManager.insertDataToDb(sqlString).subscribe((test:any) => {
+      console.log("Data inserted");
+      console.log("Data inserted");
+      console.log("Data inserted");
+  })
+}
+  getDrawData(){
+    throw new Error("I am a client error");
+//  this.dataManager.getListFromDb("SELECT * FROM test2").subscribe((dataList) => {
+//   dataList.forEach(data:any => {
+//     this.drawDict.push 
+    
+//   });
+//  })
+  }
+
   query = {
     condition: 'and',
     rules: [

@@ -8,15 +8,17 @@ import { TableData } from '../models/tableData';  // Import the interface
   providedIn: 'root'
 })
 export class DataManagerService {
-  private apiUrl = 'http://localhost:4201/query';  // URL of the Python backend
+  private apiUrl: string  = 'http://localhost:4201';  // URL of the Python backend
+  private willhabenQuery: string = this.apiUrl + "/query";
+  private insertDrawData: string = this.apiUrl + "/insertDraw";
 
   constructor(private http: HttpClient) { }
 
   executeWillhabenDataQuery(sql: string): Observable<TableData[]> {
-    return this.http.post<TableData[]>(this.apiUrl, { sql });
+    return this.http.post<TableData[]>(this.willhabenQuery, { sql });
   }
   executeInsertQuery(sql: string): Observable<any> {
-    return this.http.post<any>(this.apiUrl, { sql });
+    return this.http.post<any>(this.insertDrawData, { sql });
 }
   executeSelectListQuery(sql: string): Observable<any> {
     return this.http.post<any>(this.apiUrl, { sql });

@@ -8,7 +8,8 @@ import { Injectable } from '@angular/core';
 })
 export class DrawManagerService {
 
-    private _drawDict: { [key: string]: any; } = {};
+
+    public _drawDict: { [key: string]: any; } = {};
 
     editableLayers = new L.FeatureGroup();
     constructor() { }
