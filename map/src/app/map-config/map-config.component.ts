@@ -6,11 +6,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 //rmme
 import { HttpClient } from "@angular/common/http";
+import { DrawManagerService } from '../services/drawManager.service';
+import { DataManagerService } from '../services/data.service';
 
 @Component({
   selector: 'app-map-config',
   standalone: true,
-  imports: [CommonModule, NgxAngularQueryBuilderModule, FormsModule],
+  imports: [CommonModule, NgxAngularQueryBuilderModule, FormsModule, ],
   templateUrl: './map-config.component.html',
   styleUrl: './map-config.component.css'
 })
@@ -21,16 +23,25 @@ export class MapConfigComponent {
   saveOverlay() {
     this.http.get("brokenURL").subscribe();
   }
+  getDrawData(){
+ this.dataManager.getListFromDb("SELECT * FROM test2").subscribe((dataList) => {
+  dataList.forEach(data:any => {
+    this.drawDict.push 
+    
+  });
+ })
+  }
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private drawManager: DrawManagerService, private dataManager: DataManagerService) { }
   @Input() sqlString: string = "no Input";
   @Output() reciveSqlString = new EventEmitter<string>();
   //https://github.com/raysuelzer/ngx-angular-query-builder
   //https://stackblitz.com/edit/angular-material-13-starter-x1xj4z-p5tddv?file=src%2Fapp%2Fapp.component.ts
   //std
   parser = new Parser();
-
+  drawNameList: string[] = [];
+  drawDict: { [key: string]: any; } = {};
+  drawDictList: []
   query = {
     condition: 'and',
     rules: [

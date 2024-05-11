@@ -5,7 +5,7 @@ import { LayerService } from '../services/layers.service';
 import { CommonModule } from '@angular/common';
 import { MapConfigComponent } from '../map-config/map-config.component';
 import { TableData } from '../models/tableData';
-import { DataService } from '../services/data.service';
+import { DataManagerService } from '../services/data.service';
 import { MarkerService } from '../services/marker.service';
 import { DrawManagerService } from '../services/drawManager.service';
 
@@ -25,7 +25,7 @@ export class MapBaseComponent implements AfterViewInit {
   sqlString: string = 'select * from test2 LIMIT 20';
   showConfigBool = false;
   constructor(private markerService: MarkerService, private markerClusterService: MarkerClusterService,
-    private layerService: LayerService, private dataServie: DataService,
+    private layerService: LayerService, private dataServie: DataManagerService,
     private drawMangerService: DrawManagerService) { }
 
   private initMap(): void {
@@ -45,7 +45,7 @@ export class MapBaseComponent implements AfterViewInit {
     this.sqlString = event;
     try {
 
-      this.dataServie.getDataFromDb(this.sqlString).subscribe((tableData: TableData[]) => {
+      this.dataServie.getWillhabenDataFromDb(this.sqlString).subscribe((tableData: TableData[]) => {
         if (tableData.length >= 50) {
           console.log("more than 50 rows, I use cluster");
           this.markerClusterService.makeMarkers(this.map, tableData);

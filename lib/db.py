@@ -27,10 +27,13 @@ class Db_handler:
             print (f"exec: {exec}")
                 
     
-    def check_table_exists(self, table_name):
+    def check_table_exists(self, table_name:str):
         self.cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{table_name}'")
         if self.cursor.fetchone() is None:
-            self.create_table(table_name)
+            if "draw" in table_name:
+                self.create_table_draw(table_name)
+            else:
+               self.create_table_data(table_name)
             print(f"Table {table_name} created")
             return
         print(f"Table {table_name} exists")
@@ -54,7 +57,16 @@ class Db_handler:
         self.cursor.execute(sql, list(listing.values()))
         self.commit()
 
-    def create_table(self, table_name):
+
+    def create_table_draw(self, table_name):
+        self.cursor.execute(f"""Create Table {table_name} (
+            draw_id INTEGER PRIMARY KEY  ,
+            draw_name TEXT,
+            data_Js TEXT
+                        )    
+                            """)
+
+    def create_table_data(self, table_name):
         self.cursor.execute(f"""
             CREATE TABLE {table_name} (
                 willhaben_id INTEGER PRIMARY KEY  ,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PopupService } from './popup.service';
-import { DataService } from './data.service';
+import { DataManagerService } from './data.service';
 import { TableData } from '../models/tableData';  // Import the interface
 
 import * as L from 'leaflet';
@@ -17,7 +17,7 @@ export class MarkerClusterService {
     iconUrl: "https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png",
     iconSize: [25, 41]
   });
-  constructor(private popupService: PopupService, private dataService: DataService
+  constructor(private popupService: PopupService, private dataService: DataManagerService
   ) { }
   makeMarkers(map: L.Map, tableRows: Array<TableData>): void {
     try {

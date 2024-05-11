@@ -1,3 +1,6 @@
+import sys
+sys.path.append('.')
+from lib.db import  Db_handler
 from flask import Flask, request, jsonify
 import sqlite3
 from flask_cors import CORS
@@ -58,5 +61,7 @@ def insert():
 
 
 if __name__ == '__main__':
+    db_connection: Db_handler = Db_handler("./db/noData.db", "draw_data")
+
     app.run(debug=True, port=4201)
 
