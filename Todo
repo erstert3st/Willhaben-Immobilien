@@ -62,6 +62,7 @@ smallImprovemendsUnderWeek:
 
 done:
     python:
+        Poligon shit insert in DB
         make page crawker loop #99%
         handle already inserted willhabenIds # naja
         fix crawler
@@ -108,11 +109,8 @@ PlanForDomeDay:
     make sql Handler -> WTF was that task ?!?!? 
 
 Today:
-    ErrorHandler:
-    make bootstrap Server error to angular one 
     
-        Poligon shit:
-            insert in DB
+
             maybe also load
                 remove all current draws
                 inject all from db
@@ -127,10 +125,9 @@ Today:
 nextDay:
     poligon selector:
         make Save To Db:
-            test hook and write insert
             make Load From Db 
-            find & try hook
-            insert that in a new table 
+            make list 
+
             
         Find a way to only see in the poligons
                  Python check if are in with dbs ? -> would be nice for auto notifications 

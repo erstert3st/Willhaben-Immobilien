@@ -23,6 +23,19 @@ export class DrawManagerService {
         this._drawDict = value;
     }
 
+    loadDraws(draws: any, deleteOld: boolean = false) {
+        this.drawDict = draws;
+        if(deleteOld){
+            this.editableLayers.clearLayers();
+        }
+        let jsonObjects = JSON.parse(draws);
+        for (let draw in jsonObjects) {
+           // let json =  JSON.parse(jsonObjects[draw])
+            let layer = L.geoJSON(jsonObjects[draw]);
+            this.editableLayers.addLayer(layer);
+        }
+    }
+
     createdDraw(e: any) {
 
         var type = e.layerType,

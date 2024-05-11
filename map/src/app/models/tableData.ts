@@ -1,5 +1,5 @@
 export interface TableData {
-    willhaben_id: number;
+    willhaben_id_: number;
     platform: string;
     summary: string;
     property_type: string;

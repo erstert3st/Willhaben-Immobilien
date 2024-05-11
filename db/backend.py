@@ -60,6 +60,7 @@ def insert():
             cursor.execute('UPDATE draw_data SET data_Js = ? WHERE draw_name = ?', (data_js, draw_name))
 
         # Commit the changes
+        cursor.connection.commit()
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
 

@@ -8,18 +8,19 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from "@angular/common/http";
 import { DrawManagerService } from '../services/drawManager.service';
 import { DataManagerService } from '../services/data.service';
+import { DrawDataModel } from '../models/drawData';
 
 @Component({
   selector: 'app-map-config',
   standalone: true,
-  imports: [CommonModule, NgxAngularQueryBuilderModule, FormsModule, ],
+  imports: [CommonModule, NgxAngularQueryBuilderModule, FormsModule,],
   templateUrl: './map-config.component.html',
   styleUrl: './map-config.component.css'
 })
 export class MapConfigComponent {
 
 
-  constructor(private http: HttpClient, private drawManager: DrawManagerService, private dataManager: DataManagerService) { }
+  constructor(private http: HttpClient, private drawManager: DrawManagerService, private dataServie: DataManagerService) { }
   @Input() sqlString: string = "no Input";
   @Output() reciveSqlString = new EventEmitter<string>();
   //https://github.com/raysuelzer/ngx-angular-query-builder
@@ -28,36 +29,53 @@ export class MapConfigComponent {
   parser = new Parser();
   drawNameList: string[] = [];
   drawDict: { [key: string]: any; } = {};
- // drawDictList: []
+  // drawDictList: []
 
   loadOverlay() {
-    throw new Error("I am a client error");
-  }
-  saveOverlay() {
-    let tempName = "testInsert1";
+    let tempName = "loltestWeird";
+    let sqlString = `Select draw_name, data_Js from draw_data WHERE draw_name = "${tempName}"`;
+    this.dataServie.getDrawData(sqlString).subscribe((tableData: any[]) => {
+      if (tableData.length > 0) {
+        let tempDict =  tableData[0]; 
+        let drawData: DrawDataModel = {
 
-    let insertData:any = this.drawManager.drawDict;
-                    // if insertData == {} because why not JS ?????!?!?!?!
-    if(!insertData || Object.keys(insertData).length === 0) {
+          draw_name: tempDict['draw_name'],
+          draw_Js: tempDict['data_Js']
+        }; 
+        console.log(tableData);
+        this.drawManager.loadDraws(drawData.draw_Js, false);
+      } else {
+       throw new Error("No Data found")
+      }
+    })
+  }
+
+
+
+
+  saveOverlay() {
+    let tempName = "loltestWeird";
+
+    let insertData: any = this.drawManager.drawDict;
+    // if insertData == {} because why not JS ?????!?!?!?!
+    if (!insertData || Object.keys(insertData).length === 0) {
       throw new Error("No Data to save")
     }
     let dataObject = { name: tempName, data: insertData };
     let sqlString = JSON.stringify(dataObject);
 
-    this.dataManager.insertDataToDb(sqlString).subscribe((test:any) => {
+    this.dataServie.insertDataToDb(sqlString).subscribe((test: any) => {
       console.log("Data inserted");
-      console.log("Data inserted");
-      console.log("Data inserted");
-  })
-}
-  getDrawData(){
+    })
+  }
+  getDrawData() {
     throw new Error("I am a client error");
-//  this.dataManager.getListFromDb("SELECT * FROM test2").subscribe((dataList) => {
-//   dataList.forEach(data:any => {
-//     this.drawDict.push 
-    
-//   });
-//  })
+    //  this.dataManager.getListFromDb("SELECT * FROM test2").subscribe((dataList) => {
+    //   dataList.forEach(data:any => {
+    //     this.drawDict.push 
+
+    //   });
+    //  })
   }
 
   query = {
