@@ -1,14 +1,33 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
 
 import { TableData } from '../models/tableData';  // Import the interface
+import { PopupComponent } from '../popup/popup.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopupService {
-  constructor() { }
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    private appRef: ApplicationRef,
+    private injector: Injector) {
+  }
+
 
   makePopup(tableData: TableData): string {
+    try {
+  
+
+      let markerPopup: any = this.compilePopup(PopupComponent, 
+        (c: any ) => {c.instance.customText = 'Custom Data Injection'});
+
+      return markerPopup;
+    } catch (e) {
+      throw new Error("Popup could not be created");
+    }
+  }
+
+  makePopup_old(tableData: TableData): string {
     try {
       let popup: string = `
       <b>${tableData.summary} </b><br>
@@ -33,5 +52,21 @@ export class PopupService {
     } catch (e) {
       throw new Error("Popup could not be created");
     }
+  }
+
+  private compilePopup(component: any, onAttach: any ): any {
+    const compFactory: any = this.resolver.resolveComponentFactory(component);
+    let compRef: any = compFactory.create(this.injector);
+
+    // onAttach allows you to assign 
+    if (onAttach)
+      onAttach(compRef);
+
+    this.appRef.attachView(compRef.hostView);
+    compRef.onDestroy(() => this.appRef.detachView(compRef.hostView));
+    
+    let div = document.createElement('div');
+    div.appendChild(compRef.location.nativeElement);
+    return div;
   }
 }
