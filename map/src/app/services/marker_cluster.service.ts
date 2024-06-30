@@ -19,7 +19,7 @@ export class MarkerClusterService {
   });
   constructor(private popupService: PopupService, private dataService: DataManagerService
   ) { }
-  makeMarkers(map: L.Map, tableRows: Array<TableData>): void {
+  makeMarkers(map: L.Map, tableRows: Array<TableData>, popUpOptions: L.PopupOptions): void {
     try {
 
 

@@ -7,7 +7,7 @@ willhaben_query = WillhabenQueryBuilder()
 willhaben_query.set_category(CATEGORY.RENT_APARTMENT) \
     .set_state(STATE.STEIERMARK) \
     .set_district(DISTRICT.STEIERMARK_GRAZ) \
-    .set_rows(250) \
+    .set_rows(200) \
     .set_price_from(200) \
     .set_price_to(1000) \
     .set_size_from(20) \

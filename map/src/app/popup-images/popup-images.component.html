@@ -1,0 +1,11 @@
+ <div class="image-slider" (click)="onImageClick($event)">
+    <img [src]="images[currentIndex]" alt="Bild-Slider" loading="lazy" class="fixed-size-image">
+</div> 
+<!-- with whitespace also button
+
+
+only click on picture 
+
+<div class="image-slider" >
+    <img [src]="images[currentIndex]" alt="Bild-Slider" loading="lazy" class="fixed-size-image" (click)="onImageClick($event)">
+</div>-->

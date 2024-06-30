@@ -22,11 +22,17 @@ export class MapBaseComponent implements AfterViewInit {
   private map: any;
   mapHeight = '100%';
   buttonText = 'Show config';
-  sqlString: string = 'select * from test2 LIMIT 20';
+  sqlString: string = 'select * from test3 LIMIT 20';
   showConfigBool = false;
+  popUpOptions: L.PopupOptions = {};    
+
   constructor(private markerService: MarkerService, private markerClusterService: MarkerClusterService,
     private layerService: LayerService, private dataServie: DataManagerService,
-    private drawMangerService: DrawManagerService) { }
+    private drawMangerService: DrawManagerService) {
+      this.popUpOptions.maxWidth = 999;
+      this.popUpOptions.minWidth = 700;
+      this.popUpOptions.maxHeight = 400;
+     }
 
   private initMap(): void {
     try {
@@ -45,14 +51,15 @@ export class MapBaseComponent implements AfterViewInit {
     this.sqlString = event;
     try {
 
+
       this.dataServie.getWillhabenDataFromDb(this.sqlString).subscribe((tableData: TableData[]) => {
         if (tableData.length >= 50) {
           console.log("more than 50 rows, I use cluster");
-          this.markerClusterService.makeMarkers(this.map, tableData);
+          this.markerClusterService.makeMarkers(this.map, tableData, this.popUpOptions);
 
         } else {
           console.log("less than 50 rows, I don't use cluster");
-          this.markerService.makeMarkers(this.map, tableData);
+          this.markerService.makeMarkers(this.map, tableData, this.popUpOptions);
 
         }
 

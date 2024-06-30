@@ -16,7 +16,7 @@ export class MarkerService {
   });
   constructor(private popupService: PopupService, private dataService: DataManagerService
   ) { }
-  makeMarkers(map: L.Map, tableRows: Array<TableData>): void {
+  makeMarkers(map: L.Map, tableRows: Array<TableData>, popUpOptions: L.PopupOptions ): void {
     try {
       this.layerGroup.clearLayers();
       console.log(tableRows);
@@ -34,7 +34,7 @@ export class MarkerService {
           const markerToAdd = L.marker(new L.LatLng(lat, lon), {
             icon: this.customIcon
           });
-          markerToAdd.bindPopup(this.popupService.makePopup(rowData));
+          markerToAdd.bindPopup(this.popupService.makePopup(rowData),popUpOptions); // Fix the syntax for bindPopup options
           markerToAdd.addTo(this.layerGroup);
           counter++;
           console.log(`Added marker ${counter} `);

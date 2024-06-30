@@ -17,9 +17,8 @@ export class PopupService {
   makePopup(tableData: TableData): string {
     try {
   
-
       let markerPopup: any = this.compilePopup(PopupComponent, 
-        (c: any ) => {c.instance.customText = 'Custom Data Injection'});
+        (c: any ) => {c.instance.tableData = tableData});
 
       return markerPopup;
     } catch (e) {
@@ -27,7 +26,7 @@ export class PopupService {
     }
   }
 
-  makePopup_old(tableData: TableData): string {
+/*   makePopup_old(tableData: TableData): string {
     try {
       let popup: string = `
       <b>${tableData.summary} </b><br>
@@ -52,7 +51,7 @@ export class PopupService {
     } catch (e) {
       throw new Error("Popup could not be created");
     }
-  }
+  } */
 
   private compilePopup(component: any, onAttach: any ): any {
     const compFactory: any = this.resolver.resolveComponentFactory(component);

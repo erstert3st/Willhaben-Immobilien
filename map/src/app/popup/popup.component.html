@@ -1,7 +1,38 @@
-<h1>Custom Popup</h1>
-<p>
-An angular component rendered as a map popup.
-</p>
-<p>
-  {{customText}}
-</p>
+<div class="container">
+    <div class="row">
+        <!-- Erste Spalte -->
+        @if(tableData.image_urls){
+        <div class="col-md-8">
+            <app-popup-images [imageInput]="tableData.image_urls" ></app-popup-images>
+        </div>
+    }
+        <div class="col-md-4">
+            <p>
+                <b>{{ tableData.summary }}</b><br>
+                <b>Price: </b>{{ tableData.price }} €<br>
+                <b>Size: </b>{{ tableData.size_qm }} m²<br>
+                <b>Rooms: </b>{{ tableData.number_of_rooms }}<br>
+                <b>Living Area: </b>{{ tableData.estate_size_living_area }} m²<br>
+                @if(tableData.floor){
+                <b>Floor: </b>{{ tableData.floor }}<br>
+                }
+                <b>Location: </b>{{ tableData.location }}<br>
+                <b>Property Type Flat: </b>{{ tableData.property_type_flat }}<br>
+                <b>Free Area Type Name: </b>{{ tableData.free_area_type_name }}<br>
+                <b>Free Area Total: </b>{{ tableData.free_area_total }}<br>
+                <b>Is Private: </b>{{ tableData.is_private }}<br>
+            </p>
+        </div>
+
+        @if(tableData.description){
+            <br>
+        <div class="col-md-12">
+            <details>
+                <summary><b>Description: </b></summary>
+                {{ tableData.description }}
+            </details>
+            <a href="{{ tableData.url }}">Link</a><br>
+        </div>
+        }
+   
+</div>

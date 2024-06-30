@@ -1,4 +1,4 @@
-import { Input, Output, EventEmitter, Component, OnInit, AfterViewInit } from '@angular/core';
+import { Input, Output, EventEmitter, Component,  } from '@angular/core';
 import { NgxAngularQueryBuilderModule, QueryBuilderClassNames, QueryBuilderConfig } from "ngx-angular-query-builder";
 import { Parser } from 'node-sql-parser';
 
