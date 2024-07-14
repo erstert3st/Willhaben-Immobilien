@@ -75,6 +75,9 @@ done:
         add Pictures in api 
 
     angular: 
+        make Save To Db
+            make Load From Db 
+            make list 
         Display Warnings
         Display Error
         Css Warning/error
@@ -94,6 +97,8 @@ done:
         add all necessary fields
         add sort and page handling in url 
         add real sql statements
+        with lazy load of pictures
+
         ##done with sql emit
         ##done with check sql
         poligon:
@@ -104,57 +109,40 @@ done:
         python+angular redaht container
      
 
-PlanForDomeDay:
-    with lazy load of pictures
+PlanForSomeDay:
     make sql Handler -> WTF was that task ?!?!? 
+    check if needed:
+        maybe also load
+            remove all current draws
+            inject all from db
+    testdata to work without backend 
 
-Today:
-    
-
-            maybe also load
-                remove all current draws
-                inject all from db
-
-
-
-    )
-    OR 
-    (
-        testdata to work without backend 
-    )
-nextDay:
-    poligon selector:
-        make Save To Db:
-            make Load From Db 
-            make list 
-
-            
-        Find a way to only see in the poligons
-                 Python check if are in with dbs ? -> would be nice for auto notifications 
-                 leaflet solution ? 
+     
+        
+    Find a way to only see in the poligons
+                Python check if are in with dbs ? -> would be nice for auto notifications 
+                leaflet solution ? 
     Configurer:
-        make table selector
+        !!! make table selector!!!1
     notification:
         add notification for invalid sql
         add notification for no data found
         add notification no backend found
         
  
-    Popup:
-        try to inject directly the js in html par #Pfusch of the month 
-    
+
     Öffis:
         find a way to get the data:
             google maps api
             Öffis api
             try the öbb scraper ? 
         Display: 
-        ███████╗██╗   ██╗ ██████╗██╗  ██╗
-        ██╔════╝██║   ██║██╔════╝██║ ██╔╝
-        █████╗  ██║   ██║██║     █████╔╝ 
-        ██╔══╝  ██║   ██║██║     ██╔═██╗ 
-        ██║     ╚██████╔╝╚██████╗██║  ██╗
-        ╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝
+        # ███████╗██╗   ██╗ ██████╗██╗  ██╗
+        # ██╔════╝██║   ██║██╔════╝██║ ██╔╝
+        # █████╗  ██║   ██║██║     █████╔╝ 
+        # ██╔══╝  ██║   ██║██║     ██╔═██╗ 
+        # ██║     ╚██████╔╝╚██████╗██║  ██╗
+        # ╚═╝      ╚═════╝  ╚═════╝╚═╝  ╚═╝
                                          
 
     

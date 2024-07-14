@@ -107,7 +107,7 @@ export class MapConfigComponent {
   }
   public generateSql() {
     try {
-      let sqlQuery = 'Select * from test2 where ';
+      let sqlQuery = 'Select * from test5 where ';
       let where = this.generateSqlWhere();
       sqlQuery = sqlQuery + where;
       this.sqlString = sqlQuery;

@@ -41,7 +41,7 @@ class WillhabenQueryBuilder:
         self.availabe_now: bool = None
         self.ua_header = {"User-Agent": UserAgent().random}
         self.sort_by = 1  # 1 = newest first, 2 = nearest 3 = cheapest first, 4 = most expensive first, 5 = smallest first, 6 = largest first, 7 = relevant first
-        self.table_name = "test3"
+        self.table_name = "test5"
         self.db_connection: Db_handler = Db_handler("./db/noData.db", self.table_name)
         
 

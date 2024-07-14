@@ -39,7 +39,7 @@ export class MarkerClusterService {
           const markerToAdd = L.marker(new L.LatLng(lat, lon), {
             icon: this.customIcon
           });
-          markerToAdd.bindPopup(this.popupService.makePopup(rowData));
+          markerToAdd.bindPopup(this.popupService.makePopup(rowData), popUpOptions); // Fix the syntax for bindPopup options
           markersToAdd.push(markerToAdd);
           counter++;
           console.log(`Added marker ${counter} `);

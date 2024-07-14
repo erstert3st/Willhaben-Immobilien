@@ -3,9 +3,9 @@
         <!-- Erste Spalte -->
         @if(tableData.image_urls){
         <div class="col-md-8">
-            <app-popup-images [imageInput]="tableData.image_urls" ></app-popup-images>
+            <app-popup-images [imageInput]="tableData.image_urls"></app-popup-images>
         </div>
-    }
+        }
         <div class="col-md-4">
             <p>
                 <b>{{ tableData.summary }}</b><br>
@@ -25,14 +25,14 @@
         </div>
 
         @if(tableData.description){
-            <br>
+        <br>
         <div class="col-md-12">
             <details>
                 <summary><b>Description: </b></summary>
                 {{ tableData.description }}
             </details>
-            <a href="{{ tableData.url }}">Link</a><br>
+            <a href="{{ tableData.url }}"  target="_blank" rel="noopener noreferrer"> Link</a><br>
         </div>
         }
-   
-</div>
+
+    </div>

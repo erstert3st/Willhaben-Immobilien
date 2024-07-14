@@ -22,7 +22,7 @@ export class MapBaseComponent implements AfterViewInit {
   private map: any;
   mapHeight = '100%';
   buttonText = 'Show config';
-  sqlString: string = 'select * from test3 LIMIT 20';
+  sqlString: string = 'select * from test5 LIMIT 20';
   showConfigBool = false;
   popUpOptions: L.PopupOptions = {};    
 
@@ -30,7 +30,7 @@ export class MapBaseComponent implements AfterViewInit {
     private layerService: LayerService, private dataServie: DataManagerService,
     private drawMangerService: DrawManagerService) {
       this.popUpOptions.maxWidth = 999;
-      this.popUpOptions.minWidth = 700;
+      this.popUpOptions.minWidth = 800;
       this.popUpOptions.maxHeight = 400;
      }
 
